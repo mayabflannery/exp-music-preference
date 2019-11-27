@@ -1,0 +1,5 @@
+{
+    "python.venvPath": "D:\\programming\\kivy_venv",
+    "python.linting.pylintPath": "D:\\programming\\kivy_venv\\Scripts\\pylint.exe",
+    "python.pythonPath": "D:\\programming\\kivy_venv\\Scripts"
+}

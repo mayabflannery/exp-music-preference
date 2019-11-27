@@ -1,0 +1,379 @@
+#:kivy 1.11.1
+#:import config d09exp.common.config
+#:import hex kivy.utils.get_color_from_hex
+
+#-----------------------------------------------------------------------
+# Base Widgets (button, label, etc)
+# Note: To change the fonts uncomment the "font_name" line
+# under both <Label> and <Button>
+#-----------------------------------------------------------------------
+
+<Label>:
+    halign: 'center'
+    valign: 'middle'
+    font_name: 'AppFont'
+    color: hex(config.FONT_COLOR)
+
+<StyledLabel@Label>:
+    halign: 'left'
+    text_size: self.size
+
+<SmallLabel@Label>:
+    halign: 'left'
+    italic: True
+    font_size: '12dp'
+    text_size: self.size
+
+<Button>:
+    color: hex(config.FONT_COLOR)
+    font_name: 'AppFont'
+    size_hint_y: None
+    height: "40dp"
+
+<StyledScreen>:
+    # Uncomment to enable simple 1-tone background
+    #canvas:
+    #    Color:
+    #        rgba: hex(config.BACKGROUND_COLOR)
+    #    Rectangle:
+    #        size: self.size
+    #        pos: self.pos
+    Image:
+        source: config.WALLPAPER
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+
+#-----------------------------------------------------------------------
+# Complex Widgets
+#-----------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
+# Welcome Screen
+#-----------------------------------------------------------------------
+<WelcomeScreenControls@BoxLayout>:
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    orientation: 'vertical'
+    size_hint: (None, None)
+    size: ('345dp', '420dp')
+    padding: '5dp'
+    spacing: '3dp'
+    #backend: app.get_backend().get_midi_dirs()
+    
+    # (Un)comment for 'SHADED BOX'
+    canvas:
+        Color:
+            rgba: (0,0,0,0.3)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    
+    Image:
+        source: config.LOGO
+        keep_ratio: True
+        size_hint_y: None
+        height: '4cm'
+        
+    Label:
+        size_hint_y: None
+        height: '30dp'
+        font_size: '24dp'
+        markup: True
+        text: "[b]Welcome to the Experiment![/b]"
+    Label:
+        size_hint_y: None
+        height: '20dp'
+        text: "Please validate experiment data below.\n"
+    
+    BoxLayout:
+        StyledLabel:
+            text: "Participant Num."
+        StyledLabel:
+            text: "Trials"
+    
+    BoxLayout:
+        TextInput:
+            id: user_id
+            multiline: False
+            text: config.USER_ID
+            focus: True
+            write_tab: False
+        TextInput:
+            id: trials
+            multiline: False
+            text: config.TRIALS
+            write_tab: False
+
+    StyledLabel:
+        text: "Select Data Files"
+    
+    Spinner:
+        id: welcome_spinner
+        text: "root.backend[0]"
+        values: "root.backend"
+
+    Button:
+        text: "Run First Trial"
+        height: '40dp'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        on_press: app.root.start_experiment(user_id.text, trials.text, welcome_spinner.text)
+
+#-----------------------------------------------------------------------
+# Titlebar Base
+#-----------------------------------------------------------------------
+<TitleBar@BoxLayout>:
+    size_hint_y: None
+    padding: '3dp'
+    height: '1cm'
+    pos_hint: {'top': 1}
+    canvas:
+        Color:
+            rgba: (0,0,0,0.1)
+            #rgba: hex(config.FOREGROUND_COLOR)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Image:
+        source: config.ICON
+        #keep_ratio: True
+        pos_hint: {'center_y': 0.5}
+        size_hint_y: 1.2
+        size_hint_x: 5
+    StyledLabel:
+        text: "[b]Music[/b] Perception"
+        markup: True
+        color: hex(config.FONT_COLOR)
+        font_size: '27px'
+        size_hint_x: 33
+
+#-----------------------------------------------------------------------
+# Screens - Welcome
+# - First screen you see when app starts
+# - Mostly comprised of widgets assembled above
+#-----------------------------------------------------------------------
+<WelcomeScreen@StyledScreen>:
+    TitleBar:
+        Label:
+            size_hint_x: 62
+    WelcomeScreenControls:
+
+#-----------------------------------------------------------------------
+# Screens - Trials
+# - Main experiment, what the test subjects see
+#-----------------------------------------------------------------------
+<TrialScreen>:
+    slider: cSlider
+    continue_button: bContinue
+    play_button: bPlay
+
+    TitleBar:
+        Label:
+            size_hint_x: 62
+    BoxLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        orientation: 'vertical'
+        size_hint: (None, None)
+        size: ('440dp', '230dp')
+        padding: '5dp'
+        spacing: '3dp'
+        
+        # (Un)comment for 'SHADED BOX'
+        #canvas:
+        #    Color:
+        #        rgba: (0,0,0,0.3)
+        #    Rectangle:
+        #        size: self.size
+        #        pos: self.pos
+        Label:
+            text: config.RATEMEASURE
+            font_size: '22dp'
+        # To Float the button in the middle of the available space...
+        FloatLayout:
+            Button:
+                id: bPlay
+                on_press: root.play()
+                size_hint_x: 0.5
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                BoxLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        size_hint_x: 35
+                        source: config.PLAYB
+                    StyledLabel:
+                        size_hint_x: 75
+                        text: "Start Playback"
+    FloatLayout:
+        slider_control: cSlider
+        continue_button: bContinue
+        
+        size_hint_y: None
+        height: '3cm'
+        canvas:
+            Color:
+                rgba: (0,0,0,0.3)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+        Label:
+            size_hint_y: None
+            height: '1dp'
+            pos_hint: {'top': 1}
+            canvas:
+                Color:
+                    rgba: (0,0,0,0.6)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (None, None)
+            size: ('600dp', '2.5cm') #1.5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+            Label:
+                text: config.SCALEDESC
+            BoxLayout:
+                Label:
+                    text: config.MINTEXT
+                    size_hint_x: 15
+                    halign: 'right'
+                Slider:
+                    id: cSlider
+                    min: config.SCALEMIN
+                    max: config.SCALEMAX
+                    value: (config.SCALEMAX + config.SCALEMIN) / 2
+                    size_hint_x: 70
+                    disabled: True
+                Label:
+                    text: config.MAXTEXT
+                    size_hint_x: 15
+            # Show the slider value?
+            # SmallLabel:
+            #     text: str(round(cSlider.value, 1))
+            #     halign: 'center'
+        Button:
+            id: bContinue
+            text: "Continue..."
+            size_hint_x: None
+            width: '150dp'
+            disabled: True
+            pos_hint: {'right': .995, 'y':0.005}
+            on_press: root.continue_pressed()
+
+#-----------------------------------------------------------------------
+# Screens - Survey
+# - This gathers participant data
+#-----------------------------------------------------------------------
+<SurveyScreen>:
+    TitleBar:
+        Label:
+            size_hint_x: 62
+    BoxLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        orientation: 'vertical'
+        size_hint: (None, None)
+        size: ('440dp', '230dp')
+        padding: '5dp'
+        spacing: '3dp'
+        
+        # (Un)comment for 'SHADED BOX'
+        #canvas:
+        #    Color:
+        #        rgba: (0,0,0,0.3)
+        #    Rectangle:
+        #        size: self.size
+        #        pos: self.pos
+        Label:
+            text: "Please respond to the following questions"
+            font_size: '22dp'
+        
+        # Add question here
+        # onload, get first question
+        Label:
+            text: app.root.backend.get_survey_row(app.root.backend.survey, app.root.backend.q_id)
+        # Get response here
+
+        # on continue, get next question, or finish..
+        Button:
+            text: "Click for question"
+            on_press: app.root.backend.inc_question(app.root.backend.q_id)
+        
+    FloatLayout:
+        continue_button: bContinue
+        
+        size_hint_y: None
+        height: '3cm'
+        canvas:
+            Color:
+                rgba: (0,0,0,0.3)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+        Label:
+            size_hint_y: None
+            height: '1dp'
+            pos_hint: {'top': 1}
+            canvas:
+                Color:
+                    rgba: (0,0,0,0.6)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (None, None)
+            size: ('600dp', '2.5cm') #1.5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+            Label:
+                text: "survey: press to continue"
+        Button:
+            id: bContinue
+            text: "Continue..."
+            size_hint_x: None
+            width: '150dp'
+            disabled: True
+            pos_hint: {'right': .995, 'y':0.005}
+            #on_press: root.continue_pressed()
+
+#-----------------------------------------------------------------------
+# Screens - Exit
+#-----------------------------------------------------------------------
+<ExitScreen>:
+    TitleBar:
+        Label:
+            size_hint_x: 62
+    BoxLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        orientation: 'vertical'
+        size_hint: (None, None)
+        size: ('345dp', '3.5cm')
+        padding: '5dp'
+        spacing: '3dp'            
+            
+        Label:
+            text: "[b]Thank You![/b]"
+            font_size: '35dp'
+            markup: True
+        Label:
+            text: "Thank you for participating in this experiment.\nPlease call the experimenter."
+            font_size: '16dp'
+    Button:
+        pos_hint: {'right': .995, 'y':0.005}
+        size_hint_x: None
+        width: '150dp'
+        text: "Finish"
+        #on_press: app.stop()
+
+#-----------------------------------------------------------------------
+# Screens - Root widget of app
+# - This is what gets displayed when the app starts
+#-----------------------------------------------------------------------            
+ApplicationRoot:
+
+<ApplicationRoot>:
+    WelcomeScreen:
