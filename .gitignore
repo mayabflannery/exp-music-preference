@@ -1,0 +1,4 @@
+# Ignore html, excel, mp3 files
+*.html
+*.xlsx
+*.mp3

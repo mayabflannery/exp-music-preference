@@ -37,11 +37,14 @@ class Backend:
         if question_id == 0:
             print ("First question")
             return "Ready to begin"
-        print('Presenting question id: ', question_id)
-        print(question_list[question_id])
+        else:
+            print('Presenting question id: ', question_id)
+            print(question_list[question_id])
+            return question_list[question_id]
     
     def inc_question(self, question_id):
         self.q_id += 1
+        print(question_id)
 
 
     # def load_personality(self, personality_path):
