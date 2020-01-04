@@ -6,4 +6,4 @@ def run():
     print(exp.survey.get(1))
     print(exp.personality.get(1))
 
-        
+# Run in root folder (cd d09exp/) with "python -m d09exp"
