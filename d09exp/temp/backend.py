@@ -43,6 +43,19 @@ class questions:
         """Returns a question at number"""
         return self.questions[number][1]
 
+    def get_nextq(self):
+        """Returns the next question in the list, indicates when complete"""
+        if self.loaded == True:
+            if self.complete == False:
+                nextq = self.get(self.q_id)
+                self.q_id += 1
+            else:
+                nextq = "Participant survey complete"
+                self.q_id = 999
+        else:
+            nextq = "Error: Questions failed to load"
+        return nextq
+
 class stimuli:
     def __init__(self, folder_path, l):
         self.get_path = Path(folder_path)
