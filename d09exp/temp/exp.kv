@@ -1,1 +1,116 @@
 #:kivy 1.11.1
+#: import ism kivy.uix.screenmanager
+WindowManager:
+    id: sm
+    transition: ism.NoTransition()
+    MainScreen:
+    ParticipantScreen:
+    PersonalityScreen:
+    StimuliScreen:
+    ExitScreen:
+
+<Button>:
+    background_color: 0.5,0.25,1,0.3
+    color: 1,1,1,1
+
+<NavBar>:
+    size_hint: 1.0, 0.1
+    cols: 5
+    Button:
+        text: "Main Page"
+        on_release:
+            app.root.current = "main"
+    Button:
+        text: "Participant"
+        on_release:
+            app.root.current = "participant"
+    Button:
+        text: "Personality"
+        on_release:
+            app.root.current = "personality"
+    Button:
+        text: "Stimuli"
+        on_release:
+            app.root.current = "stimuli"
+    Button:
+        text: "Exit"
+        on_release:
+            app.root.current = "exit"
+
+<MainScreen>:
+    name: "main"
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    FloatLayout:
+        Label:
+            text: "Main"
+        NavBar:
+
+<ParticipantScreen>:
+    name: "participant"
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    FloatLayout:
+        Label:
+            text: "Participant"
+        NavBar:
+
+<PersonalityScreen>:
+    name: "personality"
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    FloatLayout:
+        Label:
+            text: "Personality"
+        NavBar:
+
+<StimuliScreen>:
+    name: "stimuli"
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    FloatLayout:
+        Label:
+            text: "Stimuli"
+        NavBar:
+
+<ExitScreen>:
+    name: "exit"
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    FloatLayout:
+        GridLayout:
+            cols: 1
+            size_hint: 0.4, 0.4
+            pos_hint: {"x":0.3, "top":0.7}
+            Label:
+                text: "The experiment is complete."
+            Label:
+                text: "Thank you for your participation!"
+            Label:
+                text: "Please see the ..."
+            Button:
+                #size_hint: 0.2, 0.2
+                text: "Click to Exit"
+                on_release:
+                    app.stop()
+        NavBar:
