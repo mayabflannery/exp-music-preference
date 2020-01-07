@@ -1,4 +1,5 @@
 Id,Question,Type,Level1,Level2,Level3
-1,What is your age?,int,na,na,na
-2,What is your gender?,select,Female,Male,Other
-3,Do you have musical training (two or more years of lessons/school)?,select,No,Yes,na
+1,What is your age?,int
+2,What is your gender?,select,Female,Male
+3,Do you have musical training (two or more years of lessons/school)?,select,No,Yes
+4,A question that requires a long answer?,text

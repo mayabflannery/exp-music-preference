@@ -1,0 +1,35 @@
+Initializing backend...
+Getting questions from:  d09exp\resources\Survey.csv
+Found 5 questions
+...done question init
+Getting questions from:  d09exp\resources\BigFiveQuestions.csv
+Found 45 questions
+...done question init
+Getting stimuli from:  d09exp\resources\stimuli
+...Found  17  files:
+   LB_Ma_45_H_F.mp3 	 ['LB', 'Ma', '45', 'H', 'F']
+   LB_Ma_45_H_P.mp3 	 ['LB', 'Ma', '45', 'H', 'P']
+   LB_Ma_45_L_F.mp3 	 ['LB', 'Ma', '45', 'L', 'F']
+   LB_Ma_45_L_P.mp3 	 ['LB', 'Ma', '45', 'L', 'P']
+   LB_Ma_90_H_F.mp3 	 ['LB', 'Ma', '90', 'H', 'F']
+   LB_Ma_90_H_P.mp3 	 ['LB', 'Ma', '90', 'H', 'P']
+   LB_Ma_90_L_F.mp3 	 ['LB', 'Ma', '90', 'L', 'F']
+   LB_Ma_90_L_P.mp3 	 ['LB', 'Ma', '90', 'L', 'P']
+   LB_mi_45_H_F.mp3 	 ['LB', 'mi', '45', 'H', 'F']
+   LB_mi_45_H_P.mp3 	 ['LB', 'mi', '45', 'H', 'P']
+   LB_mi_45_L_F.mp3 	 ['LB', 'mi', '45', 'L', 'F']
+   LB_mi_45_L_P.mp3 	 ['LB', 'mi', '45', 'L', 'P']
+   LB_mi_90_H_F.mp3 	 ['LB', 'mi', '90', 'H', 'F']
+   LB_mi_90_H_P.mp3 	 ['LB', 'mi', '90', 'H', 'P']
+   LB_mi_90_L_F.mp3 	 ['LB', 'mi', '90', 'L', 'F']
+   LB_mi_90_L_P.mp3 	 ['LB', 'mi', '90', 'L', 'P']
+   preload.mp3 	 ['reload']
+...There are  5  factors:
+  Factor  0   LB
+  Factor  1   Ma
+  Factor  2   45
+  Factor  3   H
+  Factor  4   F
+...done stimuli
+...done backend init
+Backend deleted

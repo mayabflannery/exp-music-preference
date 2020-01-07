@@ -11,6 +11,10 @@ class backend:
         print ('Initializing backend...', file=self.log)
         self.participant = 0
         
+        # Load participant data
+        self.participant = Response()
+        # temp...self.temp = self.participant.next_participant()
+
         # Load questionnaires if they exist
         if config.SURVEY_PATH:
             self.survey = questions(config.SURVEY_PATH, self.log)
@@ -35,26 +39,36 @@ class questions:
             self.questions = list(csv.reader(csvfile))
             self.loaded = True
             self.complete = False
-            self.q_id = 0
+            self.q_id = 1
+            self.total = len(self.questions)
         #...more
+        print ('Found', self.total, 'questions', file=l)
         print ('...done question init', file=l)
 
     def get(self, number):
         """Returns a question at number"""
         return self.questions[number][1]
 
+    def get_ops(self, number):
+        return self.questions[number][2:]
+
     def get_nextq(self):
-        """Returns the next question in the list, indicates when complete"""
+        """Returns the next question and answer options in the list, indicates when complete"""
         if self.loaded == True:
+            if self.q_id >= self.total:
+                self.complete = True
             if self.complete == False:
-                nextq = self.get(self.q_id)
+                self.nextq = self.get(self.q_id)
+                print ("Getting question: ", self.q_id, " - ", self.nextq)
+                self.nextop = self.get_ops(self.q_id)
+                print ("Getting options", self.nextop)
                 self.q_id += 1
             else:
-                nextq = "Participant survey complete"
+                self.nextq = "Complete"
                 self.q_id = 999
         else:
-            nextq = "Error: Questions failed to load"
-        return nextq
+            self.nextq = "Error: Questions failed to load"
+        return [self.nextq, self.nextop]
 
 class stimuli:
     def __init__(self, folder_path, l):
@@ -80,3 +94,15 @@ class stimuli:
             print ('  Factor ', i, " ", factors, file=l)
 
         print ('...done stimuli', file=l)
+
+class Response:
+    def __init__(self):
+        with open('d09exp/resources/dataAll.csv', 'r') as csvfile:
+            self.dataR = list(csv.reader(csvfile))
+            for row in self.dataR:
+                print(row)
+    
+    def next_participant(self):
+        print("The last participant is: ", self.dataR[-1][0])
+        # more...
+        return self.dataR[-1][0]
