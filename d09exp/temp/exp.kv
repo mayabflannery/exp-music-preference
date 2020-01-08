@@ -4,6 +4,7 @@
 WindowManager:
     id: sm
     transition: ism.NoTransition()
+    current: "main"
     MainScreen:
     ParticipantScreen:
     PersonalityScreen:
@@ -44,6 +45,7 @@ WindowManager:
 
 <MainScreen>:
     name: "main"
+    parNum: parNum
     Image:
         source: "./resources/img/wallM.png"
         keep_ratio: False
@@ -56,12 +58,19 @@ WindowManager:
             size_hint: 0.4, 0.4
             pos_hint: {"x":0.3, "top":0.7}
             Label:
-                text: "Welcome to study nnn"
+                text: "Welcome to  the study nnn"
             Label:
-                text: "Please confirm participant"
+                text: "Please confirm participant number"
+            TextInput:
+                id: parNum
+                text: root.get()
+                multiline: False
+                input_filter: "int"
+                halign: "center"
             Button:
                 text: "Start Experiment"
                 on_release:
+                    root.set()
                     app.root.current = "participant"
         NavBar:
 

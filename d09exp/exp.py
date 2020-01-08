@@ -8,7 +8,7 @@ Config.set('graphics', 'minimum_width', 800)
 Config.set('graphics', 'minimum_height', 600)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
-# Required files for Kivy (tutorials on techwithtim.net - super resource!)
+# Required files for Kivy (tutorials on techwithtim.net)
 # note: pylint doesn't recognize ObjectProperty for some reason (disabled annoying warning)
 import kivy
 kivy.require('1.11.1')
@@ -26,18 +26,31 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
 
 # Classes required for Kivy application, used in exp.kv
+class expApp(App):
+    '''Main Kivy application'''
+    def build(self):
+        self.exp = backend.Backend()
+        return Builder.load_file("temp/exp.kv")
+
 class WindowManager(ScreenManager):
     pass
 
 class MainScreen(Screen):
-    pass
+    parNum = ObjectProperty()
+    def get(self):
+        self.parNum.text = str(App.get_running_app().exp.participant.get_current())
+        return self.parNum.text
+    def set(self):
+        App.get_running_app().exp.participant.set_current(self.parNum.text)
+        print('participant number confirmed: ', self.parNum.text)
+
 class ParticipantScreen(Screen):
     '''Control for participant survey questions and answers'''
     parQuestion = ObjectProperty()
     parBtn1 = ObjectProperty()
     parBtn2 = ObjectProperty()
     grid1 = ObjectProperty()
-
+    
     def submit(self):
         pass
 
@@ -85,15 +98,10 @@ class NavBar(GridLayout):
     '''Navigation bar layout'''
     pass
 
-class expApp(App):
-    '''Main Kivy application'''
-    def build(self):
-        self.exp = backend.backend()
-        return Builder.load_file("temp/exp.kv")
-
 def run():
     '''Run the experiment
     Initialize backend, run Kivy application'''
     expApp().run()
 
+# c:/Users/sotas/programming/d09exp/kivy_venv/Scripts/activate.ps1
 # Run in root folder (cd d09exp/) with "python -m d09exp"

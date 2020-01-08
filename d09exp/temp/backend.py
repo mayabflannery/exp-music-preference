@@ -2,8 +2,10 @@ from d09exp.temp import config
 from pathlib import Path
 import csv
 import os
+import pandas
+import datetime
 
-class backend:
+class Backend:
     def __init__(self):
         """Initialize backend:
         Load survey, personality test, stimuli"""
@@ -97,12 +99,21 @@ class stimuli:
 
 class Response:
     def __init__(self):
-        with open('d09exp/resources/dataAll.csv', 'r') as csvfile:
-            self.dataR = list(csv.reader(csvfile))
-            for row in self.dataR:
-                print(row)
+        # Create a unique identifier for study
+        self.uid = datetime.datetime.now()
+        print (self.uid)
+
+        self.responseData = pandas.read_csv('d09exp/resources/dataAll.csv')
+        print(self.responseData)
     
-    def next_participant(self):
-        print("The last participant is: ", self.dataR[-1][0])
+    def set_current(self, number):
+        self.current = number
+        new_row = {'uid':self.uid, 'Participant': self.current}
+        self.responseData = self.responseData.append(new_row, ignore_index = True)
+        #temp 
+        self.responseData.to_csv('new.csv')
+
+    def get_current(self):
+        print("The last participant is: ", self.responseData.iloc[-1, 1])
         # more...
-        return self.dataR[-1][0]
+        return int(self.responseData.iloc[-1, 1]) + 1
