@@ -42,7 +42,7 @@ class MainScreen(Screen):
         return self.parNum.text
     def set(self):
         App.get_running_app().exp.participant.set_current(self.parNum.text)
-        print('participant number confirmed: ', self.parNum.text)
+        #print('participant number confirmed: ', self.parNum.text)
 
 class ParticipantScreen(Screen):
     '''Control for participant survey questions and answers'''
@@ -52,10 +52,14 @@ class ParticipantScreen(Screen):
     grid1 = ObjectProperty()
     
     def submit(self):
-        pass
+        for n in range(0, len(self.grid1.children)):
+            if isinstance(self.grid1.children[n], TextInput):
+                App.get_running_app().exp.participant.hold(self.parQuestion.text, self.grid1.children[n].text)
+            elif isinstance(self.grid1.children[n], ToggleButton) and (self.grid1.children[n].state == "down"):
+                App.get_running_app().exp.participant.hold(self.parQuestion.text, self.grid1.children[n].text)
 
     def get_q(self):
-        '''Gets next available question, and response type'''
+        '''Get next available question, and response type'''
         self.current = App.get_running_app().exp.survey.get_nextq()
         self.parQuestion.text = self.current[0]
         if self.parQuestion.text == "Complete":
@@ -66,27 +70,53 @@ class ParticipantScreen(Screen):
         if self.current[1][0] == "select":
             self.grid1.clear_widgets()
             self.grid1.cols = len(self.current[1])
-            print('create buttons: ', self.grid1.cols)
+            #print('create buttons: ', self.grid1.cols)
             for n in range(1, self.grid1.cols):
                 self.button = ToggleButton(text = self.current[1][n], group = "select")
-                print('create: ', self.current[1][n])
+                #print('create: ', self.current[1][n])
                 self.grid1.add_widget(self.button)
         elif self.current[1][0] == "int":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
-            print('create number input')
+            #print('create number input')
             self.input = TextInput(multiline = False, input_filter = "int", hint_text = "Enter age", halign = "center")
             self.grid1.add_widget(self.input)
         elif self.current[1][0] == "text":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
-            print('create text input')
+            #print('create text input')
             self.input = TextInput(multiline = True, hint_text = "Enter text")
             self.grid1.add_widget(self.input)
 
 
 class PersonalityScreen(Screen):
-    pass
+    '''Control for participant survey questions and answers'''
+    perQuestion = ObjectProperty()
+    perBtn1 = ObjectProperty()
+    perBtn2 = ObjectProperty()
+    grid2 = ObjectProperty()
+    
+    def submit(self):
+        for n in range(0, len(self.grid2.children)):
+            if isinstance(self.grid2.children[n], ToggleButton) and (self.grid2.children[n].state == "down"):
+                App.get_running_app().exp.participant.hold(self.perQuestion.text, self.grid2.children[n].id)
+
+    def get_q(self):
+        '''Get next available question, and response type'''
+        self.current = App.get_running_app().exp.personality.get_nextq()
+        self.perQuestion.text = self.current[0]
+        if self.perQuestion.text == "Complete":
+            self.grid2.clear_widgets()
+            self.perBtn1.disabled = True
+            self.perBtn2.disabled = False
+            return
+        if self.current[1][0] == "int":
+            self.grid2.clear_widgets()
+            self.grid2.cols = len(self.current[1])
+            #print('create buttons: ', self.grid2.cols)
+            for n in range(1, self.grid2.cols):
+                self.button = ToggleButton(text = self.current[1][n], halign = "center", group = "5-point", id = str(n))
+                self.grid2.add_widget(self.button)
 
 class StimuliScreen(Screen):
     pass

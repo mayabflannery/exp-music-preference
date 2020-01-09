@@ -49,7 +49,8 @@ class questions:
 
     def get(self, number):
         """Returns a question at number"""
-        return self.questions[number][1]
+        q = str(number) + ". " + str(self.questions[number][1])
+        return q
 
     def get_ops(self, number):
         return self.questions[number][2:]
@@ -61,9 +62,9 @@ class questions:
                 self.complete = True
             if self.complete == False:
                 self.nextq = self.get(self.q_id)
-                print ("Getting question: ", self.q_id, " - ", self.nextq)
+                #print ("Getting question: ", self.q_id, " - ", self.nextq)
                 self.nextop = self.get_ops(self.q_id)
-                print ("Getting options", self.nextop)
+                #print ("Getting options", self.nextop)
                 self.q_id += 1
             else:
                 self.nextq = "Complete"
@@ -108,12 +109,18 @@ class Response:
     
     def set_current(self, number):
         self.current = number
-        new_row = {'uid':self.uid, 'Participant': self.current}
-        self.responseData = self.responseData.append(new_row, ignore_index = True)
-        #temp 
-        self.responseData.to_csv('new.csv')
+        self.new_row = {'uid':self.uid, 'Participant': self.current}
 
     def get_current(self):
-        print("The last participant is: ", self.responseData.iloc[-1, 1])
-        # more...
+        #print("The last participant is: ", self.responseData.iloc[-1, 1])
         return int(self.responseData.iloc[-1, 1]) + 1
+
+    def hold(self, name, value):
+        self.new_row[name] = value
+
+    def saveData(self):
+        self.responseData.to_csv('new.csv')
+    
+    def __del__(self):
+        self.responseData = self.responseData.append(self.new_row, ignore_index = True)
+        self.saveData()

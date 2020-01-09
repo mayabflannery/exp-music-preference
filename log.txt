@@ -1,6 +1,6 @@
 Initializing backend...
 Getting questions from:  d09exp\resources\Survey.csv
-Found 5 questions
+Found 4 questions
 ...done question init
 Getting questions from:  d09exp\resources\BigFiveQuestions.csv
 Found 45 questions

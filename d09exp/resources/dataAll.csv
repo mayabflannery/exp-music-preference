@@ -1,9 +1,2 @@
-uid,Participant,Age,Gender,Music Training,n1,n2,n3
-2020-000,1,22,male,yes,1,2,7
-2020-001,2,21,female,no,2,5,6
-2020-002,3,20,male,yes,2,4,3
-2020-003,4,19,female,yes,3,1,2
-2020-004,5,18,male,yes,2,4,5
-2020-005,6,23,male,no,2,2,3
-2020-006,7,24,female,no,1,3,4
-2020-007,8,25,female,no,1,3,3
+uid,Participant
+0,0

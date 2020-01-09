@@ -102,6 +102,7 @@ WindowManager:
                 id: parBtn1
                 text: "Next question"
                 on_release:
+                    root.submit()
                     root.get_q()
             Button:
                 id: parBtn2
@@ -113,6 +114,10 @@ WindowManager:
 
 <PersonalityScreen>:
     name: "personality"
+    perQuestion: perQuestion
+    perBtn1: perBtn1
+    perBtn2: perBtn2
+    grid2: grid2
     Image:
         source: "./resources/img/wallM.png"
         keep_ratio: False
@@ -120,8 +125,29 @@ WindowManager:
         size_hint: (None, None)
         size: (self.parent.width, self.parent.height)
     FloatLayout:
-        Label:
-            text: "Personality"
+        GridLayout:
+            cols: 1
+            size_hint: 0.4, 0.4
+            pos_hint: {"x":0.3, "top":0.7}
+            Label:
+                text: "How I am in general\n Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please select the number below each statement to indicate the extent to which you agree or disagree with that statement.\nI am someone who..."
+            Label:
+                id: perQuestion
+                text: "Click [Next question] to start"
+            GridLayout:
+                id: grid2
+            Button:
+                id: perBtn1
+                text: "Next question"
+                on_release:
+                    root.submit()
+                    root.get_q()
+            Button:
+                id: perBtn2
+                text: "Continue study"
+                disabled: True
+                on_release:
+                    app.root.current = "stimuli"
         NavBar:
 
 <StimuliScreen>:
