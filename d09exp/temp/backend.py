@@ -6,20 +6,25 @@ import pandas
 import datetime
 
 class Backend:
+    """"""
     def __init__(self):
         """Initialize backend:
         Load survey, personality test, stimuli"""
+
+        # Open a file for program output
         self.log = open("log.txt","w+")
         print ('Initializing backend...', file=self.log)
+        
         self.participant = 0
         
         # Load participant data
         self.participant = Response()
-        # temp...self.temp = self.participant.next_participant()
 
-        # Load questionnaires if they exist
+        # Load survey questionnaire
         if config.SURVEY_PATH:
             self.survey = questions(config.SURVEY_PATH, self.log)
+
+        # Load Big Five personality
         if config.PERSONALITY_PATH:
             self.personality = questions(config.PERSONALITY_PATH, self.log)
 
@@ -34,7 +39,9 @@ class Backend:
         self.log.close()
 
 class questions:
+    """"""
     def __init__(self, csv_path, l):
+        """"""
         self.get_path = Path(csv_path)
         print ("Getting questions from: ", str(self.get_path), file=l)
         with open(self.get_path, 'r') as csvfile:
@@ -53,6 +60,7 @@ class questions:
         return q
 
     def get_ops(self, number):
+        """Get option list: choices related to question"""
         return self.questions[number][2:]
 
     def get_nextq(self):
@@ -74,7 +82,9 @@ class questions:
         return [self.nextq, self.nextop]
 
 class stimuli:
+    """Handle the musical stimuli for study"""
     def __init__(self, folder_path, l):
+        """Create a list of stimuli from files in folder"""
         self.get_path = Path(folder_path)
         print ('Getting stimuli from: ', self.get_path, file=l)
         self.in_dir = os.listdir(self.get_path)
@@ -99,8 +109,9 @@ class stimuli:
         print ('...done stimuli', file=l)
 
 class Response:
+    """Handle response data particular to participant"""
     def __init__(self):
-        # Create a unique identifier for study
+        """Create a unique identifier for study, open study data file"""
         self.uid = datetime.datetime.now()
         print (self.uid)
 
@@ -108,19 +119,24 @@ class Response:
         print(self.responseData)
     
     def set_current(self, number):
+        """Set participant number, confirmed in mainscreen"""
         self.current = number
         self.new_row = {'uid':self.uid, 'Participant': self.current}
 
     def get_current(self):
+        """Return the next participant in the study"""
         #print("The last participant is: ", self.responseData.iloc[-1, 1])
         return int(self.responseData.iloc[-1, 1]) + 1
 
     def hold(self, name, value):
+        """Hold the response values in a new row, not applied to data yet..."""
         self.new_row[name] = value
 
     def saveData(self):
+        """Create a new .csv file with data"""
         self.responseData.to_csv('new.csv')
     
     def __del__(self):
+        """Add participant responses to the entire dataset and create save it before closing"""
         self.responseData = self.responseData.append(self.new_row, ignore_index = True)
         self.saveData()
