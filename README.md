@@ -15,6 +15,8 @@
 * pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
 # Optional Examples
 * python -m pip install kivy_examples==1.11.1
-
+## Reference
+* https://kivy.org/doc/stable/guide/lang.html
+* 
 ## ToDo
 * n

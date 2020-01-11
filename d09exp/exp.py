@@ -119,7 +119,17 @@ class PersonalityScreen(Screen):
                 self.grid2.add_widget(self.button)
 
 class StimuliScreen(Screen):
-    pass
+    '''Play stimuli and get rating'''
+    slider = ObjectProperty()
+    stimBtn = ObjectProperty()
+    
+    def submit(self):
+        '''Submit the stimulus rating'''
+        pass
+
+    def get_s(self):
+        '''Get the next stimulus'''
+        pass
 
 class ExitScreen(Screen):
     pass

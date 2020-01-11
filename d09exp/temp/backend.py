@@ -4,6 +4,7 @@ import csv
 import os
 import pandas
 import datetime
+import random
 
 class Backend:
     """"""
@@ -106,7 +107,12 @@ class stimuli:
         for i, factors in enumerate(self.all_stim[0]):
             print ('  Factor ', i, " ", factors, file=l)
 
+        # Generate a random presentation order
+        self.pres_list = random.sample(range(self.trials), self.trials)
+        print ('randomized presentation list', self.pres_list)
+
         print ('...done stimuli', file=l)
+    
 
 class Response:
     """Handle response data particular to participant"""
@@ -121,12 +127,13 @@ class Response:
     def set_current(self, number):
         """Set participant number, confirmed in mainscreen"""
         self.current = number
+        self.new_file = str(self.uid.strftime('%Y_%m_%d_%H_%M_%S_%f_P_')) + str(self.current) + ".csv"
         self.new_row = {'uid':self.uid, 'Participant': self.current}
 
     def get_current(self):
         """Return the next participant in the study"""
         #print("The last participant is: ", self.responseData.iloc[-1, 1])
-        return int(self.responseData.iloc[-1, 1]) + 1
+        return int(self.responseData.iloc[-1, 0]) + 1
 
     def hold(self, name, value):
         """Hold the response values in a new row, not applied to data yet..."""
@@ -134,7 +141,11 @@ class Response:
 
     def saveData(self):
         """Create a new .csv file with data"""
-        self.responseData.to_csv('new.csv')
+        # Create an individual participant record
+        tdf = pandas.DataFrame.from_dict(self.new_row, orient = 'index')
+        tdf.to_csv(self.new_file)
+        # update data file
+        self.responseData.to_csv('d09exp/resources/dataAll.csv', na_rep = "NoRs", index = False)
     
     def __del__(self):
         """Add participant responses to the entire dataset and create save it before closing"""
