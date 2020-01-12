@@ -89,29 +89,52 @@ class stimuli:
         self.get_path = Path(folder_path)
         print ('Getting stimuli from: ', self.get_path, file=l)
         self.in_dir = os.listdir(self.get_path)
-        self.trials = len(self.in_dir)
 
-        self.stimulus = list()
-        self.all_stim = list()
+        self.stimulus = []
 
-        print ('...Found ', self.trials, ' files:', file=l)
+        print ('...Found ', len(self.in_dir), ' files:', file=l)
         for i, files in enumerate(self.in_dir):
-            self.stimulus = files.strip('.mp3')
-            self.stimulus = self.stimulus.split('_')
-            self.all_stim.insert(i, self.stimulus)
+            temp_stimulus = files
+            temp_stimulus = files.strip('.mp3')
+            temp_stimulus = temp_stimulus.split('_')
             
-            print ('  ', files, '\t', self.all_stim[i], file=l)
-        
+            # Small check for naming convention, then add stimulus
+            if len(temp_stimulus) == 5:
+                self.stimulus.append({'Name': files, 'Piece': temp_stimulus[0], 'Mode': temp_stimulus[1],
+                'Tempo': temp_stimulus[2], 'Register': temp_stimulus[3], 'Dynamics': temp_stimulus[4]})
+                print ('allstim at:', i, ' : ', self.stimulus[i], file=l)
+            else:
+                print ('WARNING: ', i, ' Invalid file will not be used:', files, file=l)
+
+        self.trials = len(self.stimulus)
+        print ('There are: ', self.trials, ' valid stimuli:', file=l)
+        for pt in range(0, self.trials):
+            st = self.stimulus[pt]
+            print ('\t', pt, '  ', st, file=l)
+
         # Read file name to get factors
-        print ('...There are ', len(self.all_stim[0]), " factors:", file=l)
-        for i, factors in enumerate(self.all_stim[0]):
+        print ('...There are ', len(self.stimulus[0]), " factors:", file=l)
+        for i, factors in enumerate(self.stimulus[0]):
             print ('  Factor ', i, " ", factors, file=l)
 
         # Generate a random presentation order
         self.pres_list = random.sample(range(self.trials), self.trials)
-        print ('randomized presentation list', self.pres_list)
+        self.s_id = 0
+        print ('randomized presentation list', self.pres_list, file=l)
 
         print ('...done stimuli', file=l)
+
+    def get_nextS(self):
+        '''Return the next trial from the randomized presentation list'''
+        if self.s_id < self.trials:
+            next_stimulus = self.stimulus[self.pres_list[self.s_id]]
+            print ('[backend] Next stimulus: ', next_stimulus, '\tid:', self.s_id, '\trandom: ', self.pres_list[self.s_id])
+            self.s_id += 1
+        else:
+            next_stimulus = "Complete"
+            print ('[backend] Complete')
+        
+        return next_stimulus
     
 
 class Response:

@@ -121,15 +121,53 @@ class PersonalityScreen(Screen):
 class StimuliScreen(Screen):
     '''Play stimuli and get rating'''
     slider = ObjectProperty()
-    stimBtn = ObjectProperty()
-    
+    plyBtn = ObjectProperty()
+    nxtBtn = ObjectProperty()
+    contBtn = ObjectProperty()
+    #Volume
+
+    def play_stimulus(self):
+        '''Play the current stimulus'''
+        if ".mp3" in self.stimulus['Name']:
+            st = config.STIMULI_PATH + '\\' + self.stimulus['Name']
+            print('Load: ', st)
+            self.sound = SoundLoader.load(st)
+        else:
+            print ('ERROR: Cannot load file (type): ', self.stimulus['Name'])
+
+        self.slider.disabled = True
+        self.plyBtn.disabled = True
+        self.nxtBtn.disabled = True
+        self.contBtn.disabled = True
+
+        self.sound.bind(on_stopped = self.play_done)
+        print('Play Now: ', self.sound.source, '\tLength: ', self.sound.length)
+        self.sound.play()
+
+    def play_done(self):
+        self.slider.disabled = False
+        self.nxtBtn.disabled = False
+
     def submit(self):
         '''Submit the stimulus rating'''
-        pass
+        if self.stimulus:
+            App.get_running_app().exp.participant.hold(self.stimulus['Name'], self.slider.value)
 
     def get_s(self):
         '''Get the next stimulus'''
-        pass
+        self.stimulus = App.get_running_app().exp.music.get_nextS()
+        self.slider.disabled = True
+        self.plyBtn.disabled = False
+        self.nxtBtn.disabled = True
+        self.contBtn.disabled = True
+
+        print ('[exp] trial: ', self.stimulus)
+        
+        if self.stimulus == "Complete":
+            self.slider.disabled = True
+            self.plyBtn.disabled = True
+            self.nxtBtn.disabled = True
+            self.contBtn.disabled = False
 
 class ExitScreen(Screen):
     pass

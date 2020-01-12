@@ -7,29 +7,48 @@ Found 45 questions
 ...done question init
 Getting stimuli from:  d09exp\resources\stimuli
 ...Found  17  files:
-   LB_Ma_45_H_F.mp3 	 ['LB', 'Ma', '45', 'H', 'F']
-   LB_Ma_45_H_P.mp3 	 ['LB', 'Ma', '45', 'H', 'P']
-   LB_Ma_45_L_F.mp3 	 ['LB', 'Ma', '45', 'L', 'F']
-   LB_Ma_45_L_P.mp3 	 ['LB', 'Ma', '45', 'L', 'P']
-   LB_Ma_90_H_F.mp3 	 ['LB', 'Ma', '90', 'H', 'F']
-   LB_Ma_90_H_P.mp3 	 ['LB', 'Ma', '90', 'H', 'P']
-   LB_Ma_90_L_F.mp3 	 ['LB', 'Ma', '90', 'L', 'F']
-   LB_Ma_90_L_P.mp3 	 ['LB', 'Ma', '90', 'L', 'P']
-   LB_mi_45_H_F.mp3 	 ['LB', 'mi', '45', 'H', 'F']
-   LB_mi_45_H_P.mp3 	 ['LB', 'mi', '45', 'H', 'P']
-   LB_mi_45_L_F.mp3 	 ['LB', 'mi', '45', 'L', 'F']
-   LB_mi_45_L_P.mp3 	 ['LB', 'mi', '45', 'L', 'P']
-   LB_mi_90_H_F.mp3 	 ['LB', 'mi', '90', 'H', 'F']
-   LB_mi_90_H_P.mp3 	 ['LB', 'mi', '90', 'H', 'P']
-   LB_mi_90_L_F.mp3 	 ['LB', 'mi', '90', 'L', 'F']
-   LB_mi_90_L_P.mp3 	 ['LB', 'mi', '90', 'L', 'P']
-   preload.mp3 	 ['reload']
-...There are  5  factors:
-  Factor  0   LB
-  Factor  1   Ma
-  Factor  2   45
-  Factor  3   H
-  Factor  4   F
+allstim at: 0  :  {'Name': 'LB_Ma_45_H_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+allstim at: 1  :  {'Name': 'LB_Ma_45_H_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+allstim at: 2  :  {'Name': 'LB_Ma_45_L_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+allstim at: 3  :  {'Name': 'LB_Ma_45_L_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+allstim at: 4  :  {'Name': 'LB_Ma_90_H_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+allstim at: 5  :  {'Name': 'LB_Ma_90_H_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+allstim at: 6  :  {'Name': 'LB_Ma_90_L_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+allstim at: 7  :  {'Name': 'LB_Ma_90_L_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+allstim at: 8  :  {'Name': 'LB_mi_45_H_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+allstim at: 9  :  {'Name': 'LB_mi_45_H_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+allstim at: 10  :  {'Name': 'LB_mi_45_L_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+allstim at: 11  :  {'Name': 'LB_mi_45_L_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+allstim at: 12  :  {'Name': 'LB_mi_90_H_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+allstim at: 13  :  {'Name': 'LB_mi_90_H_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+allstim at: 14  :  {'Name': 'LB_mi_90_L_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+allstim at: 15  :  {'Name': 'LB_mi_90_L_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+WARNING:  16  Invalid file will not be used: preload.mp3
+There are:  16  valid stimuli:
+	 0    {'Name': 'LB_Ma_45_H_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+	 1    {'Name': 'LB_Ma_45_H_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+	 2    {'Name': 'LB_Ma_45_L_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+	 3    {'Name': 'LB_Ma_45_L_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+	 4    {'Name': 'LB_Ma_90_H_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+	 5    {'Name': 'LB_Ma_90_H_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+	 6    {'Name': 'LB_Ma_90_L_F.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+	 7    {'Name': 'LB_Ma_90_L_P.mp3', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+	 8    {'Name': 'LB_mi_45_H_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+	 9    {'Name': 'LB_mi_45_H_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+	 10    {'Name': 'LB_mi_45_L_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+	 11    {'Name': 'LB_mi_45_L_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+	 12    {'Name': 'LB_mi_90_H_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+	 13    {'Name': 'LB_mi_90_H_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+	 14    {'Name': 'LB_mi_90_L_F.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+	 15    {'Name': 'LB_mi_90_L_P.mp3', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+...There are  6  factors:
+  Factor  0   Name
+  Factor  1   Piece
+  Factor  2   Mode
+  Factor  3   Tempo
+  Factor  4   Register
+  Factor  5   Dynamics
+randomized presentation list [12, 2, 9, 8, 1, 15, 11, 6, 14, 4, 0, 13, 10, 7, 5, 3]
 ...done stimuli
 ...done backend init
 Backend deleted
