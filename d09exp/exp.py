@@ -30,6 +30,9 @@ class expApp(App):
     '''Main Kivy application'''
     def build(self):
         self.exp = backend.Backend()
+        # PRELOAD LOAD A .WAV!!! -- on_stop does not work with .mp3 (but works after...)
+        self.sound = SoundLoader.load('d09exp\\resources\\stimuli\\Untitled.wav')
+        print ('init load: ', self.sound.source, '\tLength: ', self.sound.length)
         return Builder.load_file("temp/exp.kv")
 
 class WindowManager(ScreenManager):
@@ -128,23 +131,18 @@ class StimuliScreen(Screen):
 
     def play_stimulus(self):
         '''Play the current stimulus'''
-        if ".mp3" in self.stimulus['Name']:
-            st = config.STIMULI_PATH + '\\' + self.stimulus['Name']
-            print('Load: ', st)
-            self.sound = SoundLoader.load(st)
-        else:
-            print ('ERROR: Cannot load file (type): ', self.stimulus['Name'])
-
         self.slider.disabled = True
         self.plyBtn.disabled = True
+        self.plyBtn.text = "Playing"
         self.nxtBtn.disabled = True
         self.contBtn.disabled = True
 
-        self.sound.bind(on_stopped = self.play_done)
+        App.get_running_app().sound.bind(on_stop = self.play_done)
         print('Play Now: ', self.sound.source, '\tLength: ', self.sound.length)
-        self.sound.play()
+        App.get_running_app().sound.play()
 
-    def play_done(self):
+    def play_done(self, unused_arg):
+        self.plyBtn.text = "Play"
         self.slider.disabled = False
         self.nxtBtn.disabled = False
 
@@ -163,6 +161,14 @@ class StimuliScreen(Screen):
 
         print ('[exp] trial: ', self.stimulus)
         
+        if ".mp3" in self.stimulus['Name']:
+            st = config.STIMULI_PATH + '\\' + self.stimulus['Name']
+            print('Load: ', st)
+            self.sound = SoundLoader.load(st)
+        else:
+            print ('ERROR: Cannot load file (type): ', self.stimulus['Name'])
+
+
         if self.stimulus == "Complete":
             self.slider.disabled = True
             self.plyBtn.disabled = True
