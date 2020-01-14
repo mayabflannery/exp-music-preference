@@ -1,0 +1,38 @@
+Initializing backend...
+Getting questions from:  d09exp\resources\Survey.csv
+Found 4 questions
+...done question init
+Getting questions from:  d09exp\resources\BigFiveQuestions.csv
+Found 45 questions
+...done question init
+Getting stimuli from:  d09exp\resources\stimuli
+...Found  17  files:
+WARNING:  16  Invalid file will not be used: Untitled.wav
+There are:  16  valid stimuli:
+	 0    {'Name': 'LB_Ma_45_H_F.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+	 1    {'Name': 'LB_Ma_45_H_P.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+	 2    {'Name': 'LB_Ma_45_L_F.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+	 3    {'Name': 'LB_Ma_45_L_P.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+	 4    {'Name': 'LB_Ma_90_H_F.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+	 5    {'Name': 'LB_Ma_90_H_P.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+	 6    {'Name': 'LB_Ma_90_L_F.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+	 7    {'Name': 'LB_Ma_90_L_P.wav', 'Piece': 'LB', 'Mode': 'Ma', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+	 8    {'Name': 'LB_mi_45_H_F.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'F'}
+	 9    {'Name': 'LB_mi_45_H_P.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'H', 'Dynamics': 'P'}
+	 10    {'Name': 'LB_mi_45_L_F.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'F'}
+	 11    {'Name': 'LB_mi_45_L_P.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '45', 'Register': 'L', 'Dynamics': 'P'}
+	 12    {'Name': 'LB_mi_90_H_F.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'F'}
+	 13    {'Name': 'LB_mi_90_H_P.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'H', 'Dynamics': 'P'}
+	 14    {'Name': 'LB_mi_90_L_F.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'F'}
+	 15    {'Name': 'LB_mi_90_L_P.wav', 'Piece': 'LB', 'Mode': 'mi', 'Tempo': '90', 'Register': 'L', 'Dynamics': 'P'}
+...There are  6  factors:
+  Factor  0   Name
+  Factor  1   Piece
+  Factor  2   Mode
+  Factor  3   Tempo
+  Factor  4   Register
+  Factor  5   Dynamics
+Pandomized presentation list [9, 2, 13, 0, 11, 1, 15, 7, 3, 8, 5, 14, 10, 4, 12, 6]
+...done stimuli
+...done backend init
+Backend deleted

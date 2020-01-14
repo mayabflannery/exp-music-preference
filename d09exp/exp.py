@@ -32,7 +32,6 @@ class expApp(App):
         self.exp = backend.Backend()
         # PRELOAD LOAD A .WAV!!! -- on_stop does not work with .mp3 (but works after...)
         self.sound = SoundLoader.load('d09exp\\resources\\stimuli\\Untitled.wav')
-        print ('init load: ', self.sound.source, '\tLength: ', self.sound.length)
         return Builder.load_file("temp/exp.kv")
 
 class WindowManager(ScreenManager):
@@ -45,7 +44,6 @@ class MainScreen(Screen):
         return self.parNum.text
     def set(self):
         App.get_running_app().exp.participant.set_current(self.parNum.text)
-        #print('participant number confirmed: ', self.parNum.text)
 
 class ParticipantScreen(Screen):
     '''Control for participant survey questions and answers'''
@@ -54,6 +52,14 @@ class ParticipantScreen(Screen):
     parBtn2 = ObjectProperty()
     grid1 = ObjectProperty()
     
+    def check_age(self, unused_arg1, text):
+        if text.isdigit():
+            if int(text) > 5 and int(text) < 105: 
+                self.parBtn1.disabled = False
+            else:
+                self.parBtn1.disabled = True
+    def enable(self, unused_arg):
+        self.parBtn1.disabled = False
     def submit(self):
         for n in range(0, len(self.grid1.children)):
             if isinstance(self.grid1.children[n], TextInput):
@@ -63,6 +69,7 @@ class ParticipantScreen(Screen):
 
     def get_q(self):
         '''Get next available question, and response type'''
+        self.parBtn1.disabled = True
         self.current = App.get_running_app().exp.survey.get_nextq()
         self.parQuestion.text = self.current[0]
         if self.parQuestion.text == "Complete":
@@ -73,24 +80,21 @@ class ParticipantScreen(Screen):
         if self.current[1][0] == "select":
             self.grid1.clear_widgets()
             self.grid1.cols = len(self.current[1])
-            #print('create buttons: ', self.grid1.cols)
             for n in range(1, self.grid1.cols):
                 self.button = ToggleButton(text = self.current[1][n], group = "select")
-                #print('create: ', self.current[1][n])
+                self.button.bind(on_release = self.enable)
                 self.grid1.add_widget(self.button)
         elif self.current[1][0] == "int":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
-            #print('create number input')
             self.input = TextInput(multiline = False, input_filter = "int", hint_text = "Enter age", halign = "center")
+            self.input.bind(text = self.check_age)
             self.grid1.add_widget(self.input)
         elif self.current[1][0] == "text":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
-            #print('create text input')
             self.input = TextInput(multiline = True, hint_text = "Enter text")
             self.grid1.add_widget(self.input)
-
 
 class PersonalityScreen(Screen):
     '''Control for participant survey questions and answers'''
@@ -99,6 +103,8 @@ class PersonalityScreen(Screen):
     perBtn2 = ObjectProperty()
     grid2 = ObjectProperty()
     
+    def enable(self, unused_arg):
+        self.perBtn1.disabled = False
     def submit(self):
         for n in range(0, len(self.grid2.children)):
             if isinstance(self.grid2.children[n], ToggleButton) and (self.grid2.children[n].state == "down"):
@@ -106,6 +112,7 @@ class PersonalityScreen(Screen):
 
     def get_q(self):
         '''Get next available question, and response type'''
+        self.perBtn1.disabled = True
         self.current = App.get_running_app().exp.personality.get_nextq()
         self.perQuestion.text = self.current[0]
         if self.perQuestion.text == "Complete":
@@ -116,9 +123,9 @@ class PersonalityScreen(Screen):
         if self.current[1][0] == "int":
             self.grid2.clear_widgets()
             self.grid2.cols = len(self.current[1])
-            #print('create buttons: ', self.grid2.cols)
             for n in range(1, self.grid2.cols):
                 self.button = ToggleButton(text = self.current[1][n], halign = "center", group = "5-point", id = str(n))
+                self.button.bind(on_release = self.enable)
                 self.grid2.add_widget(self.button)
 
 class StimuliScreen(Screen):
@@ -127,7 +134,7 @@ class StimuliScreen(Screen):
     plyBtn = ObjectProperty()
     nxtBtn = ObjectProperty()
     contBtn = ObjectProperty()
-    #Volume
+    stimulus = None
 
     def play_stimulus(self):
         '''Play the current stimulus'''
@@ -137,9 +144,9 @@ class StimuliScreen(Screen):
         self.nxtBtn.disabled = True
         self.contBtn.disabled = True
 
-        App.get_running_app().sound.bind(on_stop = self.play_done)
+        self.sound.bind(on_stop = self.play_done)
         print('Play Now: ', self.sound.source, '\tLength: ', self.sound.length)
-        App.get_running_app().sound.play()
+        self.sound.play()
 
     def play_done(self, unused_arg):
         self.plyBtn.text = "Play"
@@ -161,13 +168,12 @@ class StimuliScreen(Screen):
 
         print ('[exp] trial: ', self.stimulus)
         
-        if ".mp3" in self.stimulus['Name']:
+        if ".wav" in self.stimulus['Name']:
             st = config.STIMULI_PATH + '\\' + self.stimulus['Name']
             print('Load: ', st)
             self.sound = SoundLoader.load(st)
         else:
             print ('ERROR: Cannot load file (type): ', self.stimulus['Name'])
-
 
         if self.stimulus == "Complete":
             self.slider.disabled = True

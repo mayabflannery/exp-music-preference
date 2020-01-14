@@ -71,9 +71,7 @@ class questions:
                 self.complete = True
             if self.complete == False:
                 self.nextq = self.get(self.q_id)
-                #print ("Getting question: ", self.q_id, " - ", self.nextq)
                 self.nextop = self.get_ops(self.q_id)
-                #print ("Getting options", self.nextop)
                 self.q_id += 1
             else:
                 self.nextq = "Complete"
@@ -95,14 +93,13 @@ class stimuli:
         print ('...Found ', len(self.in_dir), ' files:', file=l)
         for i, files in enumerate(self.in_dir):
             temp_stimulus = files
-            temp_stimulus = files.strip('.mp3')
+            temp_stimulus = files.strip('.wav')
             temp_stimulus = temp_stimulus.split('_')
             
             # Small check for naming convention, then add stimulus
             if len(temp_stimulus) == 5:
                 self.stimulus.append({'Name': files, 'Piece': temp_stimulus[0], 'Mode': temp_stimulus[1],
                 'Tempo': temp_stimulus[2], 'Register': temp_stimulus[3], 'Dynamics': temp_stimulus[4]})
-                print ('allstim at:', i, ' : ', self.stimulus[i], file=l)
             else:
                 print ('WARNING: ', i, ' Invalid file will not be used:', files, file=l)
 
@@ -120,20 +117,18 @@ class stimuli:
         # Generate a random presentation order
         self.pres_list = random.sample(range(self.trials), self.trials)
         self.s_id = 0
-        print ('randomized presentation list', self.pres_list, file=l)
-
+        print ('Randomized presentation list', self.pres_list, file=l)
         print ('...done stimuli', file=l)
 
     def get_nextS(self):
         '''Return the next trial from the randomized presentation list'''
         if self.s_id < self.trials:
             next_stimulus = self.stimulus[self.pres_list[self.s_id]]
-            print ('[backend] Next stimulus: ', next_stimulus, '\tid:', self.s_id, '\trandom: ', self.pres_list[self.s_id])
+            print ('Next stimulus: ', next_stimulus, '\tid:', self.s_id, '\trandom: ', self.pres_list[self.s_id])
             self.s_id += 1
         else:
             next_stimulus = "Complete"
-            print ('[backend] Complete')
-        
+            print ('Stimuli complete')
         return next_stimulus
     
 
