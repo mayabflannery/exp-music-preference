@@ -38,11 +38,14 @@ class WindowManager(ScreenManager):
     pass
 
 class MainScreen(Screen):
+    '''Introduce study, confirm participant'''
     parNum = ObjectProperty()
     def get(self):
+        '''Get the next participant number, can be modified if needed'''
         self.parNum.text = str(App.get_running_app().exp.participant.get_current())
         return self.parNum.text
     def set(self):
+        '''Submit the number, confirm participant'''
         App.get_running_app().exp.participant.set_current(self.parNum.text)
 
 class ParticipantScreen(Screen):
@@ -53,14 +56,19 @@ class ParticipantScreen(Screen):
     grid1 = ObjectProperty()
     
     def check_age(self, unused_arg1, text):
+        '''Verify there is a somewhat valid age entered before continue'''
         if text.isdigit():
             if int(text) > 5 and int(text) < 105: 
                 self.parBtn1.disabled = False
             else:
                 self.parBtn1.disabled = True
+
     def enable(self, unused_arg):
+        '''Verify button selected before continue'''
         self.parBtn1.disabled = False
+
     def submit(self):
+        '''Depending on inputs in grid1, submit to participant response handler'''
         for n in range(0, len(self.grid1.children)):
             if isinstance(self.grid1.children[n], TextInput):
                 App.get_running_app().exp.participant.hold(self.parQuestion.text, self.grid1.children[n].text)
@@ -72,11 +80,13 @@ class ParticipantScreen(Screen):
         self.parBtn1.disabled = True
         self.current = App.get_running_app().exp.survey.get_nextq()
         self.parQuestion.text = self.current[0]
+        # When all questions are complete, enable next step in study
         if self.parQuestion.text == "Complete":
             self.grid1.clear_widgets()
             self.parBtn1.disabled = True
             self.parBtn2.disabled = False
             return
+        # If a question requires a selection between options, create buttons
         if self.current[1][0] == "select":
             self.grid1.clear_widgets()
             self.grid1.cols = len(self.current[1])
@@ -84,12 +94,14 @@ class ParticipantScreen(Screen):
                 self.button = ToggleButton(text = self.current[1][n], group = "select")
                 self.button.bind(on_release = self.enable)
                 self.grid1.add_widget(self.button)
+        # If a question requires and integer, create an int only text input field
         elif self.current[1][0] == "int":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
             self.input = TextInput(multiline = False, input_filter = "int", hint_text = "Enter age", halign = "center")
             self.input.bind(text = self.check_age)
             self.grid1.add_widget(self.input)
+        # If a question requires a longer answer, create a longer text input field
         elif self.current[1][0] == "text":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
@@ -104,8 +116,11 @@ class PersonalityScreen(Screen):
     grid2 = ObjectProperty()
     
     def enable(self, unused_arg):
+        '''Do not allow next question until an option is selected'''
         self.perBtn1.disabled = False
+
     def submit(self):
+        '''Submit the selected button to participant response data'''
         for n in range(0, len(self.grid2.children)):
             if isinstance(self.grid2.children[n], ToggleButton) and (self.grid2.children[n].state == "down"):
                 App.get_running_app().exp.participant.hold(self.perQuestion.text, self.grid2.children[n].id)
@@ -115,11 +130,13 @@ class PersonalityScreen(Screen):
         self.perBtn1.disabled = True
         self.current = App.get_running_app().exp.personality.get_nextq()
         self.perQuestion.text = self.current[0]
+        # When all questions are complete, enable next step in study
         if self.perQuestion.text == "Complete":
             self.grid2.clear_widgets()
             self.perBtn1.disabled = True
             self.perBtn2.disabled = False
             return
+        # Create buttons for likert scale
         if self.current[1][0] == "int":
             self.grid2.clear_widgets()
             self.grid2.cols = len(self.current[1])
@@ -138,6 +155,7 @@ class StimuliScreen(Screen):
 
     def play_stimulus(self):
         '''Play the current stimulus'''
+        # Disable everything while playing
         self.slider.disabled = True
         self.plyBtn.disabled = True
         self.plyBtn.text = "Playing"
@@ -149,6 +167,7 @@ class StimuliScreen(Screen):
         self.sound.play()
 
     def play_done(self, unused_arg):
+        '''Enable slider and next/submit button'''
         self.plyBtn.text = "Play"
         self.slider.disabled = False
         self.nxtBtn.disabled = False
@@ -157,6 +176,7 @@ class StimuliScreen(Screen):
         '''Submit the stimulus rating'''
         if self.stimulus:
             App.get_running_app().exp.participant.hold(self.stimulus['Name'], self.slider.value)
+            self.slider.value = 50
 
     def get_s(self):
         '''Get the next stimulus'''
@@ -167,7 +187,16 @@ class StimuliScreen(Screen):
         self.contBtn.disabled = True
 
         print ('[exp] trial: ', self.stimulus)
-        
+
+        # When list is complete, continue study
+        if self.stimulus == "Complete":
+            self.slider.disabled = True
+            self.plyBtn.disabled = True
+            self.nxtBtn.disabled = True
+            self.contBtn.disabled = False
+            return
+
+        # Ensure wav file, then load the sound
         if ".wav" in self.stimulus['Name']:
             st = config.STIMULI_PATH + '\\' + self.stimulus['Name']
             print('Load: ', st)
@@ -175,13 +204,8 @@ class StimuliScreen(Screen):
         else:
             print ('ERROR: Cannot load file (type): ', self.stimulus['Name'])
 
-        if self.stimulus == "Complete":
-            self.slider.disabled = True
-            self.plyBtn.disabled = True
-            self.nxtBtn.disabled = True
-            self.contBtn.disabled = False
-
 class ExitScreen(Screen):
+    '''Last screen of study'''
     pass
 
 class NavBar(GridLayout):

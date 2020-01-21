@@ -7,7 +7,7 @@ import datetime
 import random
 
 class Backend:
-    """"""
+    '''Setup study, hold data, load/save files'''
     def __init__(self):
         """Initialize backend:
         Load survey, personality test, stimuli"""
@@ -15,8 +15,6 @@ class Backend:
         # Open a file for program output
         self.log = open("log.txt","w+")
         print ('Initializing backend...', file=self.log)
-        
-        self.participant = 0
         
         # Load participant data
         self.participant = Response()

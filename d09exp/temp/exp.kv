@@ -177,7 +177,10 @@ WindowManager:
             size_hint: 0.4, 0.4
             pos_hint: {"x":0.3, "top":0.7}
             Label:
-                text: "Listen..."
+                text:
+                    "Listen to the following musical pieces.\n \
+                    When the music has finished playing, indicate \
+                    your liking of the piece by moving the slider."
             Label:
                 text: "Click [Play] to listen"
             Button:
@@ -186,24 +189,34 @@ WindowManager:
                 disabled: True
                 on_release:
                     root.play_stimulus()
+            Slider:
+                id: slider
+                min: 0
+                max: 100
+                value: 50
+                size_hint_x: 100
+                disabled: True
             GridLayout:
                 cols: 3
                 Label:
-                    halign: "center"
+                    halign: "left"
+                    valign: "top"
+                    text_size: self.size
                     text: "Dislike"
-                Slider:
-                    id: slider
-                    min: 0
-                    max: 100
-                    value: 50
-                    size_hint_x: 80
-                    disabled: True
                 Label:
                     halign: "center"
-                    text: "I Like"
+                    valign: "top"
+                    text_size: self.size
+                    text: "Neutral"
+                Label:
+                    halign: "right"
+                    valign: "top"
+                    text_size: self.size
+                    text: "Like"
             Label:
+                id: sl1
                 halign: "center"
-                text: str(slider.value)
+                text: str("%.1f" % slider.value)
             Button:
                 id: nxtBtn
                 text: "Next"
