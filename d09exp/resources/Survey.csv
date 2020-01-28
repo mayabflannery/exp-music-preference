@@ -1,4 +1,20 @@
-Id,Question,Type,Level1,Level2,Level3
-1,What is your age?,int
-2,What is your gender?,select,Female,Male
-3,Do you have musical training (two or more years of lessons/school)?,select,No,Yes
+Id,Question,Type,Level1,Level2,Level3,,,,,,,,
+1,What is your age?,int,,,,,,,,,,,
+2,What is your handedness?,select,Left,Right,,,,,,,,,
+3,Do you have colour blindness?,select,Yes,No,,,,,,,,,
+4,What is your gender?,select,Female,Male,"Non-binary 
+or trans",Skip,,,,,,,
+5,"Have you ever had any formal dance training?
+If yes, select for how many years of training.",select,No,1,2,3,4,5,6,7,8,9,10+
+6,Approximately how often do you dance? Once a:,select,Day,Week,Month,Year,Never,,,,,,
+7,"What style(s) do you dance? (Latin, Ballet, Ballroom, Free, etc.) Please write your answer(s) in the box below.",text,,,,,,,,,,,
+8,"Have you ever had any formal music training?
+If yes, select for how many years of training.",select,No,1,2,3,4,5,6,7,8,9,10+
+9,Do you play a musical instrument and/or sing?,select,Yes,No,,,,,,,,,
+10,What is your principle instrument?,text,,,,,,,,,,,
+11,What year did you start playing?,text,,,,,,,,,,,
+12,"Including time spent rehearsing, approximately how many hours a week do you play/sing?",text,,,,,,,,,,,
+13,"What type of music do you usually play? (Classical, Pop, or other - please specify)",text,,,,,,,,,,,
+14,"Do you listen to music?
+If yes, approximately how many hours per week do you listen to music?",select,No,1,2,3,4,5,6,7,8,9,10+
+15,"What types of music do you listen to? (Classical, Pop, or others - please specify)",text,,,,,,,,,,,

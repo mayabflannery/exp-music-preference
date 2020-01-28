@@ -91,9 +91,10 @@ class ParticipantScreen(Screen):
             self.grid1.clear_widgets()
             self.grid1.cols = len(self.current[1])
             for n in range(1, self.grid1.cols):
-                self.button = ToggleButton(text = self.current[1][n], group = "select")
-                self.button.bind(on_release = self.enable)
-                self.grid1.add_widget(self.button)
+                if self.current[1][n] != "":
+                    self.button = ToggleButton(text = self.current[1][n], group = "select")
+                    self.button.bind(on_release = self.enable)
+                    self.grid1.add_widget(self.button)
         # If a question requires and integer, create an int only text input field
         elif self.current[1][0] == "int":
             self.grid1.clear_widgets()
@@ -105,7 +106,8 @@ class ParticipantScreen(Screen):
         elif self.current[1][0] == "text":
             self.grid1.clear_widgets()
             self.grid1.cols = 1
-            self.input = TextInput(multiline = True, hint_text = "Enter text")
+            self.input = TextInput(multiline = True, hint_text = "Enter text or press continue to skip...")
+            self.parBtn1.disabled = False
             self.grid1.add_widget(self.input)
 
 class PersonalityScreen(Screen):
@@ -216,6 +218,9 @@ def run():
     '''Run the experiment
     Initialize backend, run Kivy application'''
     expApp().run()
+
+if __name__ == '__main__':
+    run()
 
 # c:/Users/sotas/programming/d09exp/kivy_venv/Scripts/activate.ps1
 # Run in root folder (cd d09exp/) with "python -m d09exp"
