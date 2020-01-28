@@ -6,9 +6,8 @@ Getting questions from:  d09exp\resources\BigFiveQuestions.csv
 Found 45 questions
 ...done question init
 Getting stimuli from:  d09exp\resources\stimuli
-...Found  50  files:
-WARNING:  48  Invalid file will not be used: temp
-WARNING:  49  Invalid file will not be used: Untitled.wav
+...Found  49  files:
+WARNING:  48  Invalid file will not be used: Untitled.wav
 There are:  48  valid stimuli:
 	 0    {'Name': 'BA_Ma_120_H_F.wav', 'Piece': 'BA', 'Mode': 'Ma', 'Tempo': '120', 'Register': 'H', 'Dynamics': 'F'}
 	 1    {'Name': 'BA_Ma_120_H_P.wav', 'Piece': 'BA', 'Mode': 'Ma', 'Tempo': '120', 'Register': 'H', 'Dynamics': 'P'}
@@ -65,7 +64,7 @@ There are:  48  valid stimuli:
   Factor  3   Tempo
   Factor  4   Register
   Factor  5   Dynamics
-Randomized presentation list [38, 22, 34, 36, 20, 1, 9, 5, 46, 7, 41, 29, 10, 21, 12, 31, 26, 33, 19, 30, 28, 8, 16, 47, 0, 13, 44, 17, 24, 4, 18, 23, 39, 42, 3, 40, 15, 45, 11, 25, 35, 43, 2, 27, 32, 37, 6, 14]
+Randomized presentation list [18, 24, 42, 19, 17, 5, 7, 37, 30, 40, 28, 36, 46, 12, 25, 23, 45, 26, 47, 32, 41, 27, 34, 4, 6, 38, 3, 29, 15, 13, 9, 16, 20, 22, 21, 0, 1, 33, 11, 35, 10, 31, 39, 14, 43, 2, 44, 8]
 ...done stimuli
 ...done backend init
 Backend deleted

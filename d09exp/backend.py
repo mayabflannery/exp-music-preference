@@ -1,4 +1,4 @@
-from d09exp.temp import config
+from d09exp import config
 from pathlib import Path
 import csv
 import os
@@ -159,7 +159,7 @@ class Response:
         """Create a new .csv file with data"""
         # Create an individual participant record
         tdf = pandas.DataFrame.from_dict(self.new_row, orient = 'index')
-        tdf.to_csv(self.new_file)
+        tdf.to_csv(str("d09exp/resources/participant/" + self.new_file))
         # update data file
         self.responseData.to_csv('d09exp/resources/dataAll.csv', na_rep = "NoRs", index = False)
     

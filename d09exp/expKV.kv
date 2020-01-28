@@ -20,25 +20,36 @@ WindowManager:
     color: 1,1,1,1
 
 <NavBar>:
+    btCtrl: btCtrl
     size_hint: 1.0, 0.1
     cols: 5
     Button:
+        id: btCtrl
+        disabled: True
         text: "Main Page"
         on_release:
             app.root.current = "main"
     Button:
+        id: btCtrl
+        disabled: True
         text: "Participant"
         on_release:
             app.root.current = "participant"
     Button:
+        id: btCtrl
+        disabled: True
         text: "Personality"
         on_release:
             app.root.current = "personality"
     Button:
+        id: btCtrl
+        disabled: True
         text: "Stimuli"
         on_release:
             app.root.current = "stimuli"
     Button:
+        id: btCtrl
+        disabled: False
         text: "Exit"
         on_release:
             app.root.current = "exit"

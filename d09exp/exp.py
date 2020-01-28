@@ -1,5 +1,5 @@
-from d09exp.temp import backend
-from d09exp.temp import config
+from d09exp import backend
+from d09exp import config
 
 # Configure Kivy - Must be done before import
 from kivy.config import Config
@@ -7,6 +7,7 @@ Config.set('graphics', 'fullscreen', 'auto')
 Config.set('graphics', 'minimum_width', 800)
 Config.set('graphics', 'minimum_height', 600)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
+Config.set('kivy', 'exit_on_escape', 0)
 
 # Required files for Kivy (tutorials on techwithtim.net)
 # note: pylint doesn't recognize ObjectProperty for some reason (disabled annoying warning)
@@ -24,15 +25,27 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 # Add these to get question responses
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
+from kivy.core.window import Window
 
 # Classes required for Kivy application, used in exp.kv
 class expApp(App):
     '''Main Kivy application'''
     def build(self):
+        print("build expapp")
         self.exp = backend.Backend()
+        Window.bind(on_key_down=self.on_keyboard_down)
         # PRELOAD LOAD A .WAV!!! -- on_stop does not work with .mp3 (but works after...)
         self.sound = SoundLoader.load('d09exp\\resources\\stimuli\\Untitled.wav')
-        return Builder.load_file("temp/exp.kv")
+        return Builder.load_file("expKV.kv")
+    
+    def on_keyboard_down(self, instance, keyboard, keycode, text, modifiers):
+        # Ctrl+alt+m - Show menu
+        # if text == 'm' and 'ctrl' in modifiers and 'alt' in modifiers:
+        #     print("\nThe key", keycode, "have been pressed")
+        #     print(" - text is %r" % text)
+        #     print(" - modifiers are %r" % modifiers)
+        #     self.get_running_app().root.NavBar.show()
+        pass
 
 class WindowManager(ScreenManager):
     pass
@@ -212,14 +225,21 @@ class ExitScreen(Screen):
 
 class NavBar(GridLayout):
     '''Navigation bar layout'''
-    pass
+    btCtrl = ObjectProperty()
+    def show(self):
+        if self.btCtrl.disabled == True:
+            self.btCtrl.disables = False
+        else:
+            self.btCtrl.disabled = False
 
 def run():
     '''Run the experiment
     Initialize backend, run Kivy application'''
+    print("expApp run")
     expApp().run()
 
 if __name__ == '__main__':
+    print("exp run")
     run()
 
 # c:/Users/sotas/programming/d09exp/kivy_venv/Scripts/activate.ps1
