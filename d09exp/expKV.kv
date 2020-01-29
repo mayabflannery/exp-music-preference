@@ -1,4 +1,4 @@
-#:kivy 1.11.1
+#:kivy 1.9.1
 #: import ism kivy.uix.screenmanager
 
 WindowManager:
@@ -25,25 +25,25 @@ WindowManager:
     cols: 5
     Button:
         id: btCtrl
-        disabled: True
+        disabled: False
         text: "Main Page"
         on_release:
             app.root.current = "main"
     Button:
         id: btCtrl
-        disabled: True
+        disabled: False
         text: "Participant"
         on_release:
             app.root.current = "participant"
     Button:
         id: btCtrl
-        disabled: True
+        disabled: False
         text: "Personality"
         on_release:
             app.root.current = "personality"
     Button:
         id: btCtrl
-        disabled: True
+        disabled: False
         text: "Stimuli"
         on_release:
             app.root.current = "stimuli"
@@ -69,7 +69,7 @@ WindowManager:
             size_hint: 0.4, 0.4
             pos_hint: {"x":0.3, "top":0.7}
             Label:
-                text: "Welcome to  the study nnn"
+                text: "Welcome to Study 108: Explore your music preferences!"
             Label:
                 text: "Please confirm participant number"
             TextInput:
@@ -189,7 +189,7 @@ WindowManager:
             pos_hint: {"x":0.3, "top":0.7}
             Label:
                 text:
-                    "Listen to the following musical pieces.\n \
+                    "Carefully listen to the following musical excerpts.\n \
                     When the music has finished playing, indicate \
                     your liking of the piece by moving the slider."
             Label:
@@ -245,6 +245,7 @@ WindowManager:
 
 <ExitScreen>:
     name: "exit"
+    on_enter: app.exp.done()
     Image:
         source: "./resources/img/wallM.png"
         keep_ratio: False
@@ -261,7 +262,7 @@ WindowManager:
             Label:
                 text: "Thank you for your participation."
             Label:
-                text: "Please see the ..."
+                text: "Please see the study administrator"
             Button:
                 #size_hint: 0.2, 0.2
                 text: "Click to Exit"

@@ -1,4 +1,4 @@
-from d09exp import config
+import config
 from pathlib import Path
 import csv
 import os
@@ -33,8 +33,9 @@ class Backend:
 
         print ('...done backend init', file=self.log)
     
-    def __del__(self):
-        print ('Backend deleted', file=self.log)
+    def done(self):
+        print('Saving response data...', file=self.log)
+        self.participant.done()
         self.log.close()
 
 class questions:
@@ -137,7 +138,7 @@ class Response:
         self.uid = datetime.datetime.now()
         print (self.uid)
 
-        self.responseData = pandas.read_csv('d09exp/resources/dataAll.csv')
+        self.responseData = pandas.read_csv('resources/dataAll.csv')
         print(self.responseData)
     
     def set_current(self, number):
@@ -159,11 +160,11 @@ class Response:
         """Create a new .csv file with data"""
         # Create an individual participant record
         tdf = pandas.DataFrame.from_dict(self.new_row, orient = 'index')
-        tdf.to_csv(str("d09exp/resources/participant/" + self.new_file))
+        tdf.to_csv(str("resources/participant/" + self.new_file))
         # update data file
-        self.responseData.to_csv('d09exp/resources/dataAll.csv', na_rep = "NoRs", index = False)
+        self.responseData.to_csv('resources/dataAll.csv', na_rep = "NoRs", index = False)
     
-    def __del__(self):
+    def done(self):
         """Add participant responses to the entire dataset and create save it before closing"""
         self.responseData = self.responseData.append(self.new_row, ignore_index = True)
         self.saveData()

@@ -1,11 +1,11 @@
 Initializing backend...
-Getting questions from:  d09exp\resources\Survey.csv
+Getting questions from:  resources\Survey.csv
 Found 16 questions
 ...done question init
-Getting questions from:  d09exp\resources\BigFiveQuestions.csv
+Getting questions from:  resources\BigFiveQuestions.csv
 Found 45 questions
 ...done question init
-Getting stimuli from:  d09exp\resources\stimuli
+Getting stimuli from:  resources\stimuli
 ...Found  49  files:
 WARNING:  48  Invalid file will not be used: Untitled.wav
 There are:  48  valid stimuli:
@@ -64,7 +64,7 @@ There are:  48  valid stimuli:
   Factor  3   Tempo
   Factor  4   Register
   Factor  5   Dynamics
-Randomized presentation list [32, 18, 9, 45, 47, 21, 16, 44, 33, 37, 38, 0, 19, 29, 24, 31, 6, 3, 12, 26, 36, 46, 1, 43, 8, 40, 4, 10, 22, 5, 25, 41, 14, 15, 13, 17, 23, 28, 7, 20, 2, 35, 27, 30, 11, 39, 42, 34]
+Randomized presentation list [26, 32, 27, 29, 24, 21, 18, 5, 12, 37, 2, 14, 28, 41, 42, 13, 9, 3, 44, 25, 10, 38, 23, 47, 11, 19, 34, 30, 7, 22, 45, 39, 40, 6, 1, 4, 0, 17, 31, 16, 36, 20, 43, 33, 35, 15, 46, 8]
 ...done stimuli
 ...done backend init
-Backend deleted
+Saving response data...

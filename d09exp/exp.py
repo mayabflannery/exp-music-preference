@@ -1,5 +1,5 @@
-from d09exp import backend
-from d09exp import config
+import backend
+import config
 
 # Configure Kivy - Must be done before import
 from kivy.config import Config
@@ -12,7 +12,7 @@ Config.set('kivy', 'exit_on_escape', 0)
 # Required files for Kivy (tutorials on techwithtim.net)
 # note: pylint doesn't recognize ObjectProperty for some reason (disabled annoying warning)
 import kivy
-kivy.require('1.11.1')
+kivy.require('1.9.1')
 from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.core.audio import SoundLoader
