@@ -35,17 +35,24 @@ class expApp(App):
         self.exp = backend.Backend()
         Window.bind(on_key_down=self.on_keyboard_down)
         # PRELOAD LOAD A .WAV!!! -- on_stop does not work with .mp3 (but works after...)
-        self.sound = SoundLoader.load('d09exp\\resources\\stimuli\\Untitled.wav')
+        self.sound = SoundLoader.load('/resources/stimuli/Untitled.wav')
         return Builder.load_file("expKV.kv")
     
+    ##### TO DO...
+    ## gender question
+    ## deselect toggle problem...
+
     def on_keyboard_down(self, instance, keyboard, keycode, text, modifiers):
-        # Ctrl+alt+m - Show menu
-        # if text == 'm' and 'ctrl' in modifiers and 'alt' in modifiers:
-        #     print("\nThe key", keycode, "have been pressed")
-        #     print(" - text is %r" % text)
-        #     print(" - modifiers are %r" % modifiers)
-        #     self.get_running_app().root.NavBar.show()
-        pass
+        if text == 'e' and 'ctrl' in modifiers and 'alt' in modifiers:
+            self.get_running_app().root.current = "exit"
+        elif text == 'm' and 'ctrl' in modifiers and 'alt' in modifiers:
+            self.get_running_app().root.current = "main"
+        elif text == 'q' and 'ctrl' in modifiers and 'alt' in modifiers:
+            self.get_running_app().root.current = "participant"
+        elif text == 'p' and 'ctrl' in modifiers and 'alt' in modifiers:
+            self.get_running_app().root.current = "personality"
+        elif text == 's' and 'ctrl' in modifiers and 'alt' in modifiers:
+            self.get_running_app().root.current = "stimuli"
 
 class WindowManager(ScreenManager):
     pass
@@ -225,12 +232,7 @@ class ExitScreen(Screen):
 
 class NavBar(GridLayout):
     '''Navigation bar layout'''
-    btCtrl = ObjectProperty()
-    def show(self):
-        if self.btCtrl.disabled == True:
-            self.btCtrl.disables = False
-        else:
-            self.btCtrl.disabled = False
+    pass
 
 def run():
     '''Run the experiment
