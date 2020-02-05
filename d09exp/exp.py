@@ -40,7 +40,6 @@ class expApp(App):
     
     ##### TO DO...
     ## gender question
-    ## deselect toggle problem...
 
     def on_keyboard_down(self, instance, keyboard, keycode, text, modifiers):
         if text == 'e' and 'ctrl' in modifiers and 'alt' in modifiers:
@@ -112,7 +111,7 @@ class ParticipantScreen(Screen):
             self.grid1.cols = len(self.current[1])
             for n in range(1, self.grid1.cols):
                 if self.current[1][n] != "":
-                    self.button = ToggleButton(text = self.current[1][n], group = "select")
+                    self.button = ToggleButton(text = self.current[1][n], group = "select", allow_no_selection = False)
                     self.button.bind(on_release = self.enable)
                     self.grid1.add_widget(self.button)
         # If a question requires and integer, create an int only text input field
@@ -163,7 +162,7 @@ class PersonalityScreen(Screen):
             self.grid2.clear_widgets()
             self.grid2.cols = len(self.current[1])
             for n in range(1, self.grid2.cols):
-                self.button = ToggleButton(text = self.current[1][n], halign = "center", group = "5-point", id = str(n))
+                self.button = ToggleButton(text = self.current[1][n], halign = "center", group = "5-point", id = str(n), allow_no_selection = False)
                 self.button.bind(on_release = self.enable)
                 self.grid2.add_widget(self.button)
 

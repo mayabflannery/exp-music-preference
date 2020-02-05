@@ -1,0 +1,210 @@
+---
+title: "4D09 Stats"
+output: html_notebook
+---
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Get data
+
+```{r Get raw data, message=FALSE, warning=FALSE}
+# Participant files in directory
+participants <- list.files("participants\\")
+d_rawA <- tibble()
+print(paste0("Reading data of ", length(participants), " participants..."))
+for (p in participants)
+{
+  f_read <- paste0("participants\\", p)
+  # print(paste0("Reading: ", f_read))
+  csv_raw <- read_csv(f_read)  # Get participant data
+  csv_trans <- t(csv_raw)  # Translate first row to columns
+  new_row <- as_tibble(csv_trans)  # Make it a tibble
+  # Do this, I can't figure out how to get as_tibble to get col names automatically
+  colnames(new_row) <- as.character(new_row[1,])  # Set colnames to first row
+  new_row <- new_row[-1,]  # Then delete first row
+  d_rawA <- bind_rows(d_rawA, new_row)
+}
+# Write clean raw data for all participants to csv
+print("Write collection to: d_raw_clean.csv")
+write_csv(d_rawA, "d_raw_clean.csv", append = FALSE, col_names = TRUE)
+```
+
+Process Personality
+
+```{r}
+# Select participant and answers to big five test
+d_per <- select(d_rawA,
+                "Participant",
+                "1. Is talkative",
+                "2. Tends to find fault with others",
+                "3. Does a thorough job",
+                "4. Is depressed, blue",
+                "5. Is original, comes up with new ideas",
+                "6. Is reserved",
+                "7. Is helpful and unselfish with others",
+                "8. Can be somewhat careless",
+                "9. Is relaxed, handles stress well.",
+                "10. Is curious about many different things",
+                "11. Is full of energy",
+                "12. Starts quarrels with others",
+                "13. Is a reliable worker",
+                "14. Can be tense",
+                "15. Is ingenious, a deep thinker",
+                "16. Generates a lot of enthusiasm",
+                "17. Has a forgiving nature",
+                "18. Tends to be disorganized",
+                "19. Worries a lot",
+                "20. Has an active imagination",
+                "21. Tends to be quiet",
+                "22. Is generally trusting",
+                "23. Tends to be lazy",
+                "24. Is emotionally stable, not easily upset",
+                "25. Is inventive",
+                "26. Has an assertive personality",
+                "27. Can be cold and aloof",
+                "28. Perseveres until the task is finished",
+                "29. Can be moody",
+                "30. Values artistic, aesthetic experiences",
+                "31. Is sometimes shy, inhibited",
+                "32. Is considerate and kind to almost everyone",
+                "33. Does things efficiently",
+                "34. Remains calm in tense situations",
+                "35. Prefers work that is routine",
+                "36. Is outgoing, sociable",
+                "37. Is sometimes rude to others",
+                "38. Makes plans and follows through with them",
+                "39. Gets nervous easily",
+                "40. Likes to reflect, play with ideas",
+                "41. Has few artistic interests",
+                "42. Likes to cooperate with others",
+                "43. Is easily distracted",
+                "44. Is sophisticated in art, music, or literature")
+print("Write collection to: d_raw_personality.csv")
+write_csv(d_per, "d_raw_personality.csv", append = FALSE, col_names = TRUE)
+```
+
+Score personality for each participant
+```{r}
+# For each participant
+for (i in d_per$Participant)
+{
+  Participant = i
+  # Score extraversion (1, 6R, 11, 16, 21R, 26, 31R, 36)
+  Extraversion <- (
+    as.integer(d_per[i, "1. Is talkative"]) +
+    (6-as.integer(d_per[i, "6. Is reserved"])) +
+    as.integer(d_per[i, "11. Is full of energy"]) +
+    as.integer(d_per[i, "16. Generates a lot of enthusiasm"]) +
+    (6-as.integer(d_per[i, "21. Tends to be quiet"])) +
+    as.integer(d_per[i, "26. Has an assertive personality"]) +
+    (6-as.integer(d_per[i, "31. Is sometimes shy, inhibited"])) +
+    as.integer(d_per[i, "36. Is outgoing, sociable"]))/8
+  
+  # Score openness (5, 10, 15, 20, 25, 30, 35R, 40, 41R, 44)
+  Openness <- (
+    as.integer(d_per[i, "5. Is original, comes up with new ideas"]) +
+    as.integer(d_per[i, "10. Is curious about many different things"]) +
+    as.integer(d_per[i, "15. Is ingenious, a deep thinker"]) +
+    as.integer(d_per[i, "20. Has an active imagination"]) +
+    as.integer(d_per[i, "25. Is inventive"]) +
+    as.integer(d_per[i, "30. Values artistic, aesthetic experiences"]) +
+    (6-as.integer(d_per[i, "35. Prefers work that is routine"])) +
+    as.integer(d_per[1, "40. Likes to reflect, play with ideas"]) +
+    (6-as.integer(d_per[1, "41. Has few artistic interests"])) +
+    as.integer(d_per[i, "44. Is sophisticated in art, music, or literature"]))/10
+  
+  # Score agreeableness (2R, 7, 12R, 17, 22, 27R, 32, 37R, 42)
+  Agreeableness <- (
+    (6-as.integer(d_per[i, "2. Tends to find fault with others"])) +
+    as.integer(d_per[i, "7. Is helpful and unselfish with others"]) +
+    (6-as.integer(d_per[i, "12. Starts quarrels with others"])) +
+    as.integer(d_per[i, "17. Has a forgiving nature"]) +
+    as.integer(d_per[i, "22. Is generally trusting"]) +
+    (6-as.integer(d_per[i, "27. Can be cold and aloof"])) +
+    as.integer(d_per[i, "32. Is considerate and kind to almost everyone"]) +
+    (6-as.integer(d_per[i, "37. Is sometimes rude to others"])) +
+    as.integer(d_per[1, "42. Likes to cooperate with others"]))/9
+  
+  # Score neuroticism (4, 9R, 14, 19, 24R, 29, 34R, 39)
+  Neuroticism <- (
+    as.integer(d_per[i, "4. Is depressed, blue"]) +
+    (6-as.integer(d_per[i, "9. Is relaxed, handles stress well."])) +
+    as.integer(d_per[i, "14. Can be tense"]) +
+    as.integer(d_per[i, "19. Worries a lot"]) +
+    (6-as.integer(d_per[i, "24. Is emotionally stable, not easily upset"])) +
+    as.integer(d_per[i, "29. Can be moody"]) +
+    (6-as.integer(d_per[i, "34. Remains calm in tense situations"])) +
+    as.integer(d_per[i, "39. Gets nervous easily"]))/8
+  
+  # Score conscientiousness (3, 8R, 13, 18R, 23R, 28, 33, 38, 43R)
+  Conscientiousness <- (
+    as.integer(d_per[i, "3. Does a thorough job"]) +
+    (6-as.integer(d_per[i, "8. Can be somewhat careless"])) +
+    as.integer(d_per[i, "13. Is a reliable worker"]) +
+    (6-as.integer(d_per[i, "18. Tends to be disorganized"])) +
+    (6-as.integer(d_per[i, "23. Tends to be lazy"])) +
+    as.integer(d_per[i, "28. Perseveres until the task is finished"]) +
+    as.integer(d_per[i, "33. Does things efficiently"]) +
+    as.integer(d_per[i, "38. Makes plans and follows through with them"]) +
+    (6-as.integer(d_per[1, "43. Is easily distracted"])))/9
+  if (as.integer(i) == 1)
+  {
+    d_per_fin <- tibble(Participant, Extraversion, Agreeableness, Conscientiousness,
+                      Neuroticism, Openness)
+  }
+  else
+  {
+    d_per_fin <- add_row(d_per_fin, Participant, Extraversion, Agreeableness,
+                         Conscientiousness, Neuroticism, Openness)
+  }
+}
+```
+
+Normalize Ratings
+
+```{r}
+# Select participant and ratings of all stimuli
+d_rate <- select(d_rawA,
+                 "Participant",
+                 "LB_mi_90_H_F.wav", "LB_mi_90_H_P.wav", "BA_Mi_60_H_P.wav",
+                 "BA_Ma_60_L_F.wav", "BA_Ma_120_H_P.wav", "MZ_Ma_60_H_P.wav", 
+                 "BA_Mi_120_H_P.wav", "MZ_mi_60_L_P.wav", "MZ_mi_60_L_F.wav",
+                 "BA_Ma_120_L_P.wav", "LB_Ma_45_H_P.wav", "MZ_mi_120_H_F.wav",
+                 "BA_Mi_120_L_F.wav", "MZ_Ma_120_H_F.wav", "BA_Mi_60_L_F.wav",
+                 "MZ_mi_120_L_F.wav", "BA_Ma_60_H_P.wav", "LB_Ma_45_L_P.wav",
+                 "MZ_Ma_120_H_P.wav", "BA_Ma_120_H_F.wav", "MZ_Ma_60_L_F.wav",
+                 "MZ_Ma_60_L_P.wav", "LB_Ma_90_H_P.wav", "LB_Ma_45_H_F.wav",
+                 "LB_mi_45_H_P.wav", "BA_Mi_120_L_P.wav", "LB_mi_90_L_P.wav",
+                 "BA_Ma_60_H_F.wav", "BA_Ma_60_L_P.wav", "BA_Mi_120_H_F.wav",
+                 "MZ_mi_60_H_F.wav", "LB_Ma_45_L_F.wav", "MZ_mi_120_L_P.wav",
+                 "MZ_Ma_120_L_F.wav", "LB_mi_45_H_F.wav", "MZ_Ma_120_L_P.wav",
+                 "BA_Mi_60_L_P.wav", "LB_mi_45_L_P.wav", "LB_Ma_90_L_F.wav",
+                 "MZ_mi_60_H_P.wav", "LB_mi_90_L_F.wav", "MZ_mi_120_H_P.wav",
+                 "LB_Ma_90_L_P.wav", "MZ_Ma_60_H_F.wav", "LB_mi_45_L_F.wav",
+                 "BA_Mi_60_H_F.wav", "LB_Ma_90_H_F.wav", "BA_Ma_120_L_F.wav")
+print("Write collection to: d_raw_rate.csv")
+write_csv(d_rate, "d_raw_rate.csv", append = FALSE, col_names = TRUE)
+
+# Normalize
+for (i in d_rate$Participant)
+{
+  mu <- mean(as.double(d_rate[i,-1]))
+  stdev <- sd(as.double(d_rate[i,-1]))
+  znor <- (as.double(d_rate[i,-1])-mu)/stdev
+  d_rate[i,-1] <- znor
+}
+col_to_add <- paste(names(d_rate[,-1]))
+d_per_rate_fin <- d_per_fin
+d_per_rate_fin[,col_to_add]=d_rate[,-1]
+print("Write collection to: d_final.csv")
+write_csv(d_per_rate_fin, "d_final.csv", append = FALSE, col_names = TRUE)
+```
+
+Stats
+
+```{r}
+
+```
+

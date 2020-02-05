@@ -11,6 +11,19 @@ WindowManager:
     StimuliScreen:
     ExitScreen:
 
+<Screen>:
+    Image:
+        source: "./resources/img/wallM.png"
+        keep_ratio: False
+        allow_stretch: True
+        size_hint: (None, None)
+        size: (self.parent.width, self.parent.height)
+    NavBar:
+
+<Label>:
+    halign: "center"
+    font_size: 20
+
 <Button>:
     background_color: 0.5,0.25,1,0.3
     color: 1,1,1,1
@@ -19,10 +32,14 @@ WindowManager:
     background_color: 0.5,0.25,1,0.3
     color: 1,1,1,1
 
+<GridLayout>:
+    cols: 1
+    size_hint: 0.6, 0.6
+    pos_hint: {"x":0.2, "top":0.8}
+
 <NavBar>:
-    id: nb
-    btCtrl: btCtrl
     size_hint: 1.0, 0.1
+    pos_hint: {"x":0, "bottom":0}
     cols: 5
     Button:
         id: btCtrl
@@ -63,33 +80,23 @@ WindowManager:
 <MainScreen>:
     name: "main"
     parNum: parNum
-    Image:
-        source: "./resources/img/wallM.png"
-        keep_ratio: False
-        allow_stretch: True
-        size_hint: (None, None)
-        size: (self.parent.width, self.parent.height)
-    FloatLayout:
-        GridLayout:
-            cols: 1
-            size_hint: 0.4, 0.4
-            pos_hint: {"x":0.3, "top":0.7}
-            Label:
-                text: "Welcome to Study 108: Explore your music preferences!"
-            Label:
-                text: "Please confirm participant number"
-            TextInput:
-                id: parNum
-                text: root.get()
-                multiline: False
-                input_filter: "int"
-                halign: "center"
-            Button:
-                text: "Start Experiment"
-                on_release:
-                    root.set()
-                    app.root.current = "participant"
-        NavBar:
+
+    GridLayout:
+        Label:
+            text: "Welcome to Study 108: Explore your music preferences!"
+        Label:
+            text: "Please confirm participant number"
+        TextInput:
+            id: parNum
+            text: root.get()
+            multiline: False
+            input_filter: "int"
+            halign: "center"
+        Button:
+            text: "Start Experiment"
+            on_release:
+                root.set()
+                app.root.current = "participant"
 
 <ParticipantScreen>:
     name: "participant"
@@ -97,37 +104,27 @@ WindowManager:
     parBtn1: parBtn1
     parBtn2: parBtn2
     grid1: grid1
-    Image:
-        source: "./resources/img/wallM.png"
-        keep_ratio: False
-        allow_stretch: True
-        size_hint: (None, None)
-        size: (self.parent.width, self.parent.height)
-    FloatLayout:
+
+    GridLayout:
+        Label:
+            text: "Please answer the following questions as accurately as you can."
+        Label:
+            id: parQuestion
+            text: "Click [Next question] to start"
         GridLayout:
-            cols: 1
-            size_hint: 0.4, 0.4
-            pos_hint: {"x":0.3, "top":0.7}
-            Label:
-                text: "Please answer the following questions as accurately as you can."
-            Label:
-                id: parQuestion
-                text: "Click [Next question] to start"
-            GridLayout:
-                id: grid1
-            Button:
-                id: parBtn1
-                text: "Next question"
-                on_release:
-                    root.submit()
-                    root.get_q()
-            Button:
-                id: parBtn2
-                text: "Continue study"
-                disabled: True
-                on_release:
-                    app.root.current = "personality"
-        NavBar:
+            id: grid1
+        Button:
+            id: parBtn1
+            text: "Next question"
+            on_release:
+                root.submit()
+                root.get_q()
+        Button:
+            id: parBtn2
+            text: "Continue study"
+            disabled: True
+            on_release:
+                app.root.current = "personality"
 
 <PersonalityScreen>:
     name: "personality"
@@ -135,45 +132,36 @@ WindowManager:
     perBtn1: perBtn1
     perBtn2: perBtn2
     grid2: grid2
-    Image:
-        source: "./resources/img/wallM.png"
-        keep_ratio: False
-        allow_stretch: True
-        size_hint: (None, None)
-        size: (self.parent.width, self.parent.height)
-    FloatLayout:
+
+    GridLayout:
+        Label:
+            size: self.texture_size
+            text_size: cm(14), cm(3.5)
+            text:
+                "How I am in general?\nHere are a number of characteristics \
+                that may or may not apply to you. For example, do you agree \
+                that you are someone who likes to spend time with others? \
+                Please select the number below each statement to indicate the \
+                extent to which you agree or disagree with that statement.\n\nI \
+                am someone who...\n"
+        Label:
+            id: perQuestion
+            text_size: cm(14), cm(2.5)
+            text: "Click [Next question] to start"
         GridLayout:
-            cols: 1
-            size_hint: 0.4, 0.5
-            pos_hint: {"x":0.3, "top":0.7}
-            Label:
-                size: self.texture_size
-                text_size: cm(14), cm(3.5)
-                text:
-                    "How I am in general?\nHere are a number of characteristics \
-                    that may or may not apply to you. For example, do you agree \
-                    that you are someone who likes to spend time with others? \
-                    Please select the number below each statement to indicate the \
-                    extent to which you agree or disagree with that statement.\n\nI \
-                    am someone who..."
-            Label:
-                id: perQuestion
-                text: "Click [Next question] to start"
-            GridLayout:
-                id: grid2
-            Button:
-                id: perBtn1
-                text: "Next question"
-                on_release:
-                    root.submit()
-                    root.get_q()
-            Button:
-                id: perBtn2
-                text: "Continue study"
-                disabled: True
-                on_release:
-                    app.root.current = "stimuli"
-        NavBar:
+            id: grid2
+        Button:
+            id: perBtn1
+            text: "Next question"
+            on_release:
+                root.submit()
+                root.get_q()
+        Button:
+            id: perBtn2
+            text: "Continue study"
+            disabled: True
+            on_release:
+                app.root.current = "stimuli"
 
 <StimuliScreen>:
     name: "stimuli"
@@ -182,96 +170,73 @@ WindowManager:
     nxtBtn: nxtBtn
     contBtn: contBtn
 
-    Image:
-        source: "./resources/img/wallM.png"
-        keep_ratio: False
-        allow_stretch: True
-        size_hint: (None, None)
-        size: (self.parent.width, self.parent.height)
-    FloatLayout:
+    GridLayout:
+        Label:
+            text:
+                "You will hear different versions of several short piano pieces.\n\n \
+                Using the slider on the screen, please tell us how much you like or \
+                dislike each version.\n"
+        Label:
+            text: "Click [Play] to listen"
+        Button:
+            id: plyBtn
+            text: "Play"
+            disabled: True
+            on_release:
+                root.play_stimulus()
+        Slider:
+            id: slider
+            min: 0
+            max: 100
+            value: 50
+            size_hint_x: 100
+            disabled: True
         GridLayout:
-            cols: 1
-            size_hint: 0.4, 0.4
-            pos_hint: {"x":0.3, "top":0.7}
+            cols: 3
             Label:
-                text:
-                    "Carefully listen to the following musical excerpts.\n \
-                    When the music has finished playing, indicate \
-                    your liking of the piece by moving the slider."
+                halign: "left"
+                valign: "top"
+                text_size: self.size
+                text: "Dislike"
             Label:
-                text: "Click [Play] to listen"
-            Button:
-                id: plyBtn
-                text: "Play"
-                disabled: True
-                on_release:
-                    root.play_stimulus()
-            Slider:
-                id: slider
-                min: 0
-                max: 100
-                value: 50
-                size_hint_x: 100
-                disabled: True
-            GridLayout:
-                cols: 3
-                Label:
-                    halign: "left"
-                    valign: "top"
-                    text_size: self.size
-                    text: "Dislike"
-                Label:
-                    halign: "center"
-                    valign: "top"
-                    text_size: self.size
-                    text: "Neutral"
-                Label:
-                    halign: "right"
-                    valign: "top"
-                    text_size: self.size
-                    text: "Like"
-            Label:
-                id: sl1
                 halign: "center"
-                text: str("%.1f" % (slider.value/10))
-            Button:
-                id: nxtBtn
-                text: "Next"
-                on_release:
-                    root.submit()
-                    root.get_s()
-            Button:
-                id: contBtn
-                text: "Continue study"
-                disabled: True
-                on_release:
-                    app.root.current = "exit"
-
-        NavBar:
+                valign: "top"
+                text_size: self.size
+                text: "Neutral"
+            Label:
+                halign: "right"
+                valign: "top"
+                text_size: self.size
+                text: "Like"
+        Label:
+            id: sl1
+            halign: "center"
+            text: str("%.1f" % (slider.value/10))
+        Button:
+            id: nxtBtn
+            text: "Next"
+            on_release:
+                root.submit()
+                root.get_s()
+        Button:
+            id: contBtn
+            text: "Continue study"
+            disabled: True
+            on_release:
+                app.root.current = "exit"
 
 <ExitScreen>:
     name: "exit"
     on_enter: app.exp.done()
-    Image:
-        source: "./resources/img/wallM.png"
-        keep_ratio: False
-        allow_stretch: True
-        size_hint: (None, None)
-        size: (self.parent.width, self.parent.height)
-    FloatLayout:
-        GridLayout:
-            cols: 1
-            size_hint: 0.4, 0.4
-            pos_hint: {"x":0.3, "top":0.7}
-            Label:
-                text: "The study is complete!"
-            Label:
-                text: "Thank you for your participation."
-            Label:
-                text: "Please see the study administrator"
-            Button:
-                #size_hint: 0.2, 0.2
-                text: "Click to Exit"
-                on_release:
-                    app.stop()
-        NavBar:
+
+    GridLayout:
+        Label:
+            text: "The study is complete!"
+        Label:
+            text: "Thank you for your participation."
+        Label:
+            text: "Please see the study administrator\n"
+        Button:
+            text: "Click to Exit"
+            on_release:
+                app.stop()
