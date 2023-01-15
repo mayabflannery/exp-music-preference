@@ -37,9 +37,6 @@ class expApp(App):
         # PRELOAD LOAD A .WAV!!! -- on_stop does not work with .mp3 (but works after...)
         self.sound = SoundLoader.load('/resources/stimuli/Untitled.wav')
         return Builder.load_file("expKV.kv")
-    
-    ##### TO DO...
-    ## gender question
 
     def on_keyboard_down(self, instance, keyboard, keycode, text, modifiers):
         if text == 'e' and 'ctrl' in modifiers and 'alt' in modifiers:
@@ -73,11 +70,11 @@ class ParticipantScreen(Screen):
     parBtn1 = ObjectProperty()
     parBtn2 = ObjectProperty()
     grid1 = ObjectProperty()
-    
+
     def check_age(self, unused_arg1, text):
         '''Verify there is a somewhat valid age entered before continue'''
         if text.isdigit():
-            if int(text) > 5 and int(text) < 105: 
+            if int(text) > 5 and int(text) < 105:
                 self.parBtn1.disabled = False
             else:
                 self.parBtn1.disabled = True
@@ -135,7 +132,7 @@ class PersonalityScreen(Screen):
     perBtn1 = ObjectProperty()
     perBtn2 = ObjectProperty()
     grid2 = ObjectProperty()
-    
+
     def enable(self, unused_arg):
         '''Do not allow next question until an option is selected'''
         self.perBtn1.disabled = False

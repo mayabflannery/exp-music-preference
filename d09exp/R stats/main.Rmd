@@ -1,5 +1,5 @@
 ---
-title: "4D09 Stats"
+title: "Score BFI-44"
 output: html_notebook
 ---
 
@@ -101,7 +101,7 @@ for (i in d_per$Participant)
     as.integer(d_per[i, "26. Has an assertive personality"]) +
     (6-as.integer(d_per[i, "31. Is sometimes shy, inhibited"])) +
     as.integer(d_per[i, "36. Is outgoing, sociable"]))/8
-  
+
   # Score openness (5, 10, 15, 20, 25, 30, 35R, 40, 41R, 44)
   Openness <- (
     as.integer(d_per[i, "5. Is original, comes up with new ideas"]) +
@@ -114,7 +114,7 @@ for (i in d_per$Participant)
     as.integer(d_per[1, "40. Likes to reflect, play with ideas"]) +
     (6-as.integer(d_per[1, "41. Has few artistic interests"])) +
     as.integer(d_per[i, "44. Is sophisticated in art, music, or literature"]))/10
-  
+
   # Score agreeableness (2R, 7, 12R, 17, 22, 27R, 32, 37R, 42)
   Agreeableness <- (
     (6-as.integer(d_per[i, "2. Tends to find fault with others"])) +
@@ -126,7 +126,7 @@ for (i in d_per$Participant)
     as.integer(d_per[i, "32. Is considerate and kind to almost everyone"]) +
     (6-as.integer(d_per[i, "37. Is sometimes rude to others"])) +
     as.integer(d_per[1, "42. Likes to cooperate with others"]))/9
-  
+
   # Score neuroticism (4, 9R, 14, 19, 24R, 29, 34R, 39)
   Neuroticism <- (
     as.integer(d_per[i, "4. Is depressed, blue"]) +
@@ -137,7 +137,7 @@ for (i in d_per$Participant)
     as.integer(d_per[i, "29. Can be moody"]) +
     (6-as.integer(d_per[i, "34. Remains calm in tense situations"])) +
     as.integer(d_per[i, "39. Gets nervous easily"]))/8
-  
+
   # Score conscientiousness (3, 8R, 13, 18R, 23R, 28, 33, 38, 43R)
   Conscientiousness <- (
     as.integer(d_per[i, "3. Does a thorough job"]) +
@@ -169,7 +169,7 @@ Normalize Ratings
 d_rate <- select(d_rawA,
                  "Participant",
                  "LB_mi_90_H_F.wav", "LB_mi_90_H_P.wav", "BA_Mi_60_H_P.wav",
-                 "BA_Ma_60_L_F.wav", "BA_Ma_120_H_P.wav", "MZ_Ma_60_H_P.wav", 
+                 "BA_Ma_60_L_F.wav", "BA_Ma_120_H_P.wav", "MZ_Ma_60_H_P.wav",
                  "BA_Mi_120_H_P.wav", "MZ_mi_60_L_P.wav", "MZ_mi_60_L_F.wav",
                  "BA_Ma_120_L_P.wav", "LB_Ma_45_H_P.wav", "MZ_mi_120_H_F.wav",
                  "BA_Mi_120_L_F.wav", "MZ_Ma_120_H_F.wav", "BA_Mi_60_L_F.wav",
@@ -200,11 +200,5 @@ d_per_rate_fin <- d_per_fin
 d_per_rate_fin[,col_to_add]=d_rate[,-1]
 print("Write collection to: d_final.csv")
 write_csv(d_per_rate_fin, "d_final.csv", append = FALSE, col_names = TRUE)
-```
-
-Stats
-
-```{r}
-
 ```
 
